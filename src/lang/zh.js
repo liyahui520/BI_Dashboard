@@ -67,7 +67,11 @@ export default {
     consumables: '消耗品',
     products: '产品管理',
     Unit: '单位',
-  Base:'基础数据'
+    Base: '基础数据',
+    Pets: '宠物',
+    Petsmaster: '宠主',
+    Case: '病例',
+    Revenue: '营收'
   },
   navbar: {
     dashboard: '首页',
@@ -188,7 +192,7 @@ export default {
     Oper_Url: '请求URL',
     Oper_IP: '操作IP',
     Oper_Create_Time: '操作时间',
-    Oper_Ver:'操作版本'
+    Oper_Ver: '操作版本'
   },
   pmedicines: {
     BarCode: '条形码',
@@ -225,14 +229,14 @@ export default {
     DrugsNameDesc: '产品名称，通用名，英文名，拼音',
     PEdit: '批量修改',
     PDelete: '批量删除',
-    Lower:'批量下发'
+    Lower: '批量下发'
   },
   common: {
     yes: '是',
     no: '否',
     yesDeleted: '启用',
-    noDeleted:'停用'
+    noDeleted: '停用'
   },
   query: '查询',
-  
+
 }

@@ -14,6 +14,10 @@ import Layout from '@/layout'
 import productRouter from './modules/productmanaement'
 import baseRouter from './modules/base'
 import biRouter from './modules/bi'
+import petsRoute from './modules/pets'
+import petsMasterRoute from './modules/petsmaster'
+import caseRoute from './modules/case'
+import revenueRoute from './modules/revenue'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -114,7 +118,7 @@ export const constantRoutes = [
   {
     path: '/profile',
     component: Layout,
-    redirect: '/profile/index',
+    redirect: '/index',
     hidden: true,
     children: [
       {
@@ -132,9 +136,13 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  productRouter,
-  baseRouter,
+  // productRouter,
+  // baseRouter,
   biRouter,
+  petsRoute,
+  petsMasterRoute,
+  caseRoute,
+  revenueRoute,
   // {
   //   path: '/permission',
   //   component: Layout,
@@ -266,18 +274,18 @@ export const asyncRoutes = [
   //   ]
   // },
 
-  {
-    path: '/logs',
-    component: Layout,
-    children: [
-      {
-        path: 'log',
-        component: () => import('@/views/logs/index'),
-        name: 'ErrorLog',
-        meta: { title: 'errorLog', icon: 'bug' }
-      }
-    ]
-  },
+  // {
+  //   path: '/logs',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'log',
+  //       component: () => import('@/views/logs/index'),
+  //       name: 'ErrorLog',
+  //       meta: { title: 'errorLog', icon: 'bug' }
+  //     }
+  //   ]
+  // },
 
   // {
   //   path: '/excel',
