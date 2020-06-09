@@ -71,7 +71,8 @@ export default {
     Pets: '宠物',
     Petsmaster: '宠主',
     Case: '病例',
-    Revenue: '营收'
+    Revenue: '营收',
+    Testeachart:'测试Echart'
   },
   navbar: {
     dashboard: '首页',

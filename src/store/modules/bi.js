@@ -1,6 +1,5 @@
-import { gettest } from '@/api/bi'
-import router, { resetRouter } from '@/router'
-import {cleanArray} from '@/utils/index'
+import { gettest,getPcustomersCpayments,getBiGender,getBirthDatePercent,getCustomerSource } from '@/api/bi'
+
 
 const state = {
   logData: [],
@@ -37,7 +36,47 @@ const actions = {
         reject(error)
       })
     })
-  }
+  },
+  getPcustomersCpayments({ commit  },params) {
+    return new Promise((resolve, reject) => {
+      getPcustomersCpayments(params).then(response => {
+        const { data } = response 
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getBiGender({ commit  }) {
+    return new Promise((resolve, reject) => {
+      getBiGender().then(response => {
+        const { data } = response 
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getBirthDatePercent({ commit  }) {
+    return new Promise((resolve, reject) => {
+      getBirthDatePercent().then(response => {
+        const { data } = response 
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getCustomerSource({ commit  }) {
+    return new Promise((resolve, reject) => {
+      getCustomerSource().then(response => {
+        const { data } = response 
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
 }
 
 export default {

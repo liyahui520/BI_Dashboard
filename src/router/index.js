@@ -18,6 +18,7 @@ import petsRoute from './modules/pets'
 import petsMasterRoute from './modules/petsmaster'
 import caseRoute from './modules/case'
 import revenueRoute from './modules/revenue'
+import testechartRoute from './modules/testechart'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -143,6 +144,7 @@ export const asyncRoutes = [
   petsMasterRoute,
   caseRoute,
   revenueRoute,
+  testechartRoute,
   // {
   //   path: '/permission',
   //   component: Layout,

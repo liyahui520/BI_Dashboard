@@ -1,51 +1,51 @@
 <template>
   <div class="app-container">
     <el-card>
-      <!-- 表单区域 -->
-      <el-header>
-        <el-form :inline="true" class="demo-form-inline">
-          <el-form-item :label="$t('pmedicines.DrugsName')">
-            <!-- <el-input
-              v-model="params.params.drugsName"
-              :placeholder="$t('pmedicines.DrugsNameDesc')"
-            ></el-input> -->
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click.native="GetTableData">{{$t('query')}}</el-button>
-          </el-form-item>
-        </el-form>
-      </el-header>
-      <!-- table区域 -->
-      <el-main>
-
-        <el-table
-          :data="this.lableData"
-          row-class-name="row"
-          cell-class-name="column"
-          v-loading="loading"
-          border
-          stripe
-          align="center"
-          style="width: 99.9%;height:100%;overflow:hidden;"
-        >
-          <span v-for="(item1,index1) in data" :key="index1">
-            <el-table-column v-if="item1!='name'" :prop="item1" :width="'110px'" :label="item1">
-              <template slot-scope="scope">{{scope.row[item1]}}</template>
-            </el-table-column>
-            <el-table-column v-else :prop="item1" :width="'110px'" fixed="left" :label="item1">
-              <template slot-scope="scope">{{scope.row[item1]}}</template>
-            </el-table-column>
-          </span>
-        </el-table>
-      </el-main>
+    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+      <el-tab-pane label="客户来源" name="source">
+        <sourceCom />
+      </el-tab-pane>
+      <el-tab-pane label="活跃客户" name="active">
+        <active />
+      </el-tab-pane>
+      <el-tab-pane label="流失客户" name="loss">
+        <loss />
+      </el-tab-pane>
+      <el-tab-pane label="最近消费客户" name="lately">
+        <latelyconsume />
+      </el-tab-pane>
+      <el-tab-pane label="消费频次" name="number">
+        <consumenumber />
+      </el-tab-pane>
+      <el-tab-pane label="年龄分布" name="age">
+        <age />
+      </el-tab-pane>
+      <el-tab-pane label="性别" name="sex">
+        <sex />
+      </el-tab-pane>
+    </el-tabs>
     </el-card>
   </div>
 </template>
 <script>
 import { dateFormat } from "@/utils/index";
-import { mapGetters } from "vuex";
+import active from '../component/petsmaster/active/index'
+import age from '../component/petsmaster/age/index'
+import consumenumber from '../component/petsmaster/consumenumber/index'
+import latelyconsume from '../component/petsmaster/latelyconsume/index'
+import loss from '../component/petsmaster/loss/index'
+import sex from '../component/petsmaster/sex/index'
+import sourceCom from '../component/petsmaster/source/index'
 export default {
-  name: "",
+  components:{
+    active,
+    age,
+    consumenumber,
+    latelyconsume,
+    loss,
+    sex,
+    sourceCom
+  },
   data() {
     return {
       data: [],
@@ -54,16 +54,11 @@ export default {
         children: "children",
         label: "name"
       },
-      drugType: 1047,
       input: "",
-      // 分页参数 Satrt
-      total: 0,
-      page: 10,
-      limit: 10,
-      pageSizes: [10, 20, 50, 100],
       loading: false,
       tableData: [],
-      categoryId: -1
+      categoryId: -1,
+      activeName: "source"
     };
   },
   created() {
@@ -77,7 +72,9 @@ export default {
     headerClass() {
       return "table-header-class";
     },
-
+    handleClick(tab, event) {
+      console.log(tab, event);
+    },
     // element列表文字居中
     cellStyle() {
       return "text-align:center;line-height: 8px;";

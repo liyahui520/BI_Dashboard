@@ -48,8 +48,7 @@ service.interceptors.response.use(
     if (res.code !== 200) {
       Message({
         message: res.msg || 'Error',
-        type: 'error',
-        duration: 5 * 10000
+        type: 'error'
       })
 
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
@@ -73,9 +72,8 @@ service.interceptors.response.use(
   error => {
     console.log('err' + error) // for debug
     Message({
-      message: error.msg,
-      type: 'error',
-      duration: 5 * 1000
+      message: error.msg||'Error',
+      type: 'error'
     })
     return Promise.reject(error)
   }
