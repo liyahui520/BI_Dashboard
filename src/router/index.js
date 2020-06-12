@@ -78,16 +78,29 @@ export const constantRoutes = [
     component: () => import('@/views/error-page/401'),
     hidden: true
   },
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   children: [
+  //     {
+  //       path: 'dashboard',
+  //       component: () => import('@/views/dashboard/index'),
+  //       name: 'Dashboard',
+  //       meta: { title: 'dashboard', icon: 'dashboard', affix: true }
+  //     }
+  //   ]
+  // },
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/pets/pets',
     children: [
       {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: 'dashboard', icon: 'dashboard', affix: true }
+        path: 'pets/pets',
+        component: () => import('@/views/pets/index'),
+        name: 'Pets',
+        meta: { title: 'Pets', icon: 'dashboard', affix: true }
       }
     ]
   },
@@ -139,12 +152,12 @@ export const constantRoutes = [
 export const asyncRoutes = [
   // productRouter,
   // baseRouter,
-  biRouter,
-  petsRoute,
+  // biRouter,
+  // petsRoute,
   petsMasterRoute,
-  caseRoute,
-  revenueRoute,
-  testechartRoute,
+  // caseRoute,
+  // revenueRoute,
+  // testechartRoute,
   // {
   //   path: '/permission',
   //   component: Layout,

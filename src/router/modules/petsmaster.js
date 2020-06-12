@@ -11,7 +11,7 @@ const petsMasterRouter = {
   children: [
     {
       path: 'petsmaster',
-      // name: 'Petsmaster',
+      name: 'Petsmaster',
       component: () => import('@/views/petsmaster/index'),
       meta: { title: 'Petsmaster' }
     }

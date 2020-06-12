@@ -58,13 +58,15 @@ export default {
       isHasData: false
     };
   },
+  created(){
+    var _this=this;
+    _this.loading=true;
+  },
   watch: {
-    catHeadData: function(newValue, oldValue) {
+    'catHeadData': function(newValue, oldValue) {
+      var _this=this;
+      _this.loading=false;
       if (newValue.length > 0) {
-        var _this = this;
-        /**
-         * 初始化目录
-         */
         _this.loadPetsData();
       }
     }

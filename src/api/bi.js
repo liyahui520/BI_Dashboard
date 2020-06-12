@@ -75,3 +75,38 @@ export function getPPetsData(data) {
     data
   })
 }
+
+
+/**
+ * 
+ * @param {消费频次数据统计} data 
+ */
+export function getCpaymentNum(data) {
+  return request({
+    url: '/BI/GetCpaymentNum',
+    method: 'post',
+    data
+  })
+}
+/**
+ * 
+ * @param {活跃客户数据统计} data 
+ */
+export function getLateCpayments(data) {
+  return request({
+    url: '/BI/GetLateCpayments',
+    method: 'post',
+    data
+  })
+}
+/**
+ * 
+ * @param {流失客户数据统计} data 
+ */
+export function getRunCpayments(data) {
+  return request({
+    url: '/BI/GetRunCpayments',
+    method: 'post',
+    data
+  })
+}

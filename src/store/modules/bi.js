@@ -1,4 +1,4 @@
-import { gettest,getPcustomersCpayments,getBiGender,getBirthDatePercent,getCustomerSource,getPPetsData } from '@/api/bi'
+import { gettest,getPcustomersCpayments,getBiGender,getBirthDatePercent,getCustomerSource,getPPetsData,getCpaymentNum,getLateCpayments,getRunCpayments } from '@/api/bi'
 
 
 const state = {
@@ -80,6 +80,37 @@ const actions = {
   getPPetsData({ commit  }) {
     return new Promise((resolve, reject) => {
       getPPetsData().then(response => {
+        const { data } = response 
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  getCpaymentNum({ commit  },params) {
+    return new Promise((resolve, reject) => {
+      getCpaymentNum(params).then(response => {
+        const { data } = response 
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getLateCpayments({ commit  },params) {
+    return new Promise((resolve, reject) => {
+      getLateCpayments(params).then(response => {
+        const { data } = response 
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getRunCpayments({ commit  },params) {
+    return new Promise((resolve, reject) => {
+      getRunCpayments(params).then(response => {
         const { data } = response 
         resolve(data)
       }).catch(error => {

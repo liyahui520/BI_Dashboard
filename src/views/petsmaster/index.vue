@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-card>
-    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+    <el-tabs v-model="activeName" type="card">
       <el-tab-pane label="客户来源" name="source">
         <sourceCom />
       </el-tab-pane>
