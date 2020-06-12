@@ -1,4 +1,4 @@
-import { gettest,getPcustomersCpayments,getBiGender,getBirthDatePercent,getCustomerSource } from '@/api/bi'
+import { gettest,getPcustomersCpayments,getBiGender,getBirthDatePercent,getCustomerSource,getPPetsData } from '@/api/bi'
 
 
 const state = {
@@ -70,6 +70,16 @@ const actions = {
   getCustomerSource({ commit  }) {
     return new Promise((resolve, reject) => {
       getCustomerSource().then(response => {
+        const { data } = response 
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getPPetsData({ commit  }) {
+    return new Promise((resolve, reject) => {
+      getPPetsData().then(response => {
         const { data } = response 
         resolve(data)
       }).catch(error => {

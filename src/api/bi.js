@@ -61,3 +61,17 @@ export function getCustomerSource(data) {
     data
   })
 }
+
+
+
+/**
+ * 
+ * @param {宠物相关数据统计} data 
+ */
+export function getPPetsData(data) {
+  return request({
+    url: '/BI/GetPPets',
+    method: 'post',
+    data
+  })
+}

@@ -33,20 +33,31 @@
       >
         <span v-for="(item1,index1) in data" :key="index1">
           <el-table-column
-            v-if="item1!='姓名'"
+            v-if="item1!='序号'"
             :prop="item1"
             :width="'130px'"
+            
             sortable
             :label="item1"
           >
             <template slot-scope="scope">{{scope.row[item1]}}</template>
           </el-table-column>
-          <el-table-column
-            v-else
+          <!-- <el-table-column
+            v-else-if="item1=='姓名'"
             :prop="item1"
             :width="'130px'"
             fixed="left"
             sortable
+            :label="item1"
+          >
+            <template slot-scope="scope">{{scope.row[item1]}}</template>
+          </el-table-column> -->
+          <el-table-column
+            v-else
+            :prop="item1"
+            :width="'130px'"
+            sortable
+            fixed="left"
             :label="item1"
           >
             <template slot-scope="scope">{{scope.row[item1]}}</template>
@@ -56,7 +67,14 @@
     </el-main>
     <!-- 分页区域 -->
     <el-footer>
-      <Pagination :total="total" :page="page" :limit="limit" :pageSizes="pageSizes" :background="true"></Pagination>
+      <Pagination
+        :total="total"
+        :page="params.currentPage"
+        :limit="params.pageSize"
+        :pageSizes="pageSizes"
+        :background="true"
+        @pagination="pagination"
+      ></Pagination>
     </el-footer>
   </div>
 </template>
@@ -73,15 +91,21 @@ export default {
         label: "name"
       },
       // 分页参数 Satrt
-      total: 200,
-      page: 10,
-      limit: 10,
+      total: 0,
       pageSizes: [10, 20, 50, 100],
       loading: false,
       value1: [],
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
+        }
+      },
+      params: {
+        currentPage: 1,
+        pageSize: 10,
+        params: {
+          end: "",
+          start: ""
         }
       }
     };
@@ -105,7 +129,10 @@ export default {
       var getDate = newend.getDate();
       getDate = getDate < 10 ? "0" + getDate : getDate;
       var endDateTwo = `${newend.getFullYear()}-${month}-${getDate}`;
-      _this.loadLater(_this.value1[0], endDateTwo);
+
+      _this.params.params.start = _this.value1[0];
+      _this.params.params.end = endDateTwo;
+      _this.loadLater();
     },
     // 表格头部样式
     headerClass() {
@@ -116,21 +143,27 @@ export default {
     cellStyle() {
       return "text-align:center;line-height: 8px;";
     },
-    loadLater: function(start, end) {
+    loadLater: function() {
       var _this = this;
       _this.loading = true;
+
       _this.$store
-        .dispatch("bi/getPcustomersCpayments", {
-          end: end,
-          start: start
-        })
+        .dispatch("bi/getPcustomersCpayments", _this.params)
         .then(res => {
           _this.loading = false;
+          _this.data = [];
+          _this.lableData = [];
           console.log("res.header的数据为", res.header);
-          _this.data = res.header;
+          for (let t = 0; t < res.header.length; t++) {
+            const element = res.header[t];
+            if (element != "PageCount") _this.data.push(element);
+          }
           _this.lableData = res.tbody;
+          if (_this.lableData.length > 0) {
+            console.log("数据总行数为", _this.lableData[0]["PageCount"]);
+            _this.total = parseInt(_this.lableData[0]["PageCount"]);
+          }
         });
-      _this.loading = false;
     },
     /**
      * 格式化时间
@@ -138,6 +171,15 @@ export default {
     dateFormat: function(row, column) {
       //row 表示一行数据, updateTime 表示要格式化的字段名称
       return dateFormat(row.insertdate);
+    },
+    //分页点击事件
+    pagination(param) {
+      var _this = this;
+      console.log("页数为", param.page);
+      console.log("页容量为", param.limit);
+      _this.params.currentPage = param.page;
+      _this.params.pageSize = param.limit;
+      _this.searchData();
     }
   }
 };
