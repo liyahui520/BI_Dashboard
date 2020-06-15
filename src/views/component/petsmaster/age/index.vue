@@ -29,7 +29,6 @@ export default {
           _this.headData.push(element.Pname);
           _this.dataList.push({ value: element.PCount, name: element.Pname,percentNum:element.PercentNum });
         }
-        console.log("请求年龄分布数据结果为",res);
         _this.$nextTick(function() {
           _this.initECharts();
         });

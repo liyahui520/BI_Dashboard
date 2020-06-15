@@ -19,9 +19,24 @@
           </el-select>
         </el-form-item>
         <el-form-item label="个月"></el-form-item>
-        <el-form-item label="阀值">
-          <el-input v-model="params.params.num" type="number"></el-input>
+        <!-- <el-form-item label="阀值">
+          <el-tooltip placement="right">
+            <div slot="content">
+              多行信息
+              <br />第二行信息
+            </div>
+            <i class="el-icon-info"></i>
+          </el-tooltip>
         </el-form-item>
+        <el-form-item>
+          <el-input v-model="params.params.num" type="number" style="float:right"></el-input>
+        </el-form-item> -->
+        <el-form-item label="阀值">
+          <el-input v-model="params.params.num" type="number" style="float:right"></el-input>
+        </el-form-item>
+        <!-- <el-form-item>
+          <el-input v-model="params.params.num" type="number" style="float:right"></el-input>
+        </el-form-item> -->
         <el-form-item>
           <el-button type="primary" @click.native="loadLater">{{$t('query')}}</el-button>
         </el-form-item>
@@ -50,13 +65,7 @@
           >
             <template slot-scope="scope">{{scope.row[item1]|dateFormat}}</template>
           </el-table-column>
-          <el-table-column
-            v-else
-            :prop="item1"
-            :width="'130px'"
-            sortable
-            :label="item1"
-          >
+          <el-table-column v-else :prop="item1" :width="'130px'" sortable :label="item1">
             <template slot-scope="scope">{{scope.row[item1]}}</template>
           </el-table-column>
         </span>
@@ -137,7 +146,9 @@ export default {
   methods: {
     handNumber() {
       var _this = this;
-      if (parseInt(_this.params.params.num) > parseInt(_this.params.params.month)) {
+      if (
+        parseInt(_this.params.params.num) > parseInt(_this.params.params.month)
+      ) {
         _this.params.params.num = parseInt(_this.params.params.month);
       }
     },

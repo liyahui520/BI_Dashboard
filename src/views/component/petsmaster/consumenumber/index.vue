@@ -35,37 +35,41 @@ export default {
           return time.getTime() > Date.now();
         }
       },
-      start:'',
-      end:''
+      start: "",
+      end: "",
+      headData: [],
+      dataList: []
     };
   },
-  created(){
-    var _this=this;
-    // _this.handDefultDate();
+  created() {
+    var _this = this;
+    _this.handDefultDate();
   },
   mounted() {
     var _this = this;
     // _this.searchData();
   },
   methods: {
-    handDefultDate(){
-      var _this=this;
-      var currentDate=new Date();
-      var year=currentDate.getFullYear();
-      var month=currentDate.getMonth();
-      var day=currentDate.getDate();
-      var start=`${year}-${((month+1)<10?'0'+(month+1):(month+1))}-01`;
-      currentDate.setMonth(month+1);
-      var endMonth=currentDate.getMonth();
-      var end=`${year}-${(endMonth<10?'0'+endMonth:endMonth)}-01`;
-      var endTwo=`${year}-${((endMonth+1)<10?'0'+(endMonth+1):(endMonth+1))}-01`;
-      console.log("开始日期为",start);
-      console.log("结束日期为",end);
-      _this.start=start;
-      _this.end=endTwo;
-      _this.months.push(start)
-      _this.months.push(end)
-      console.log("实际传输的值为",_this.start,_this.end)
+    handDefultDate() {
+      var _this = this;
+      var currentDate = new Date();
+      var year = currentDate.getFullYear();
+      var month = currentDate.getMonth();
+      var day = currentDate.getDate();
+      var start = `${year}-${
+        month + 1 < 10 ? "0" + (month + 1) : month + 1
+      }-01`;
+      currentDate.setMonth(month + 1);
+      var endMonth = currentDate.getMonth();
+      var end = `${year}-${endMonth < 10 ? "0" + endMonth : endMonth}-01`;
+      var endTwo = `${year}-${
+        endMonth + 1 < 10 ? "0" + (endMonth + 1) : endMonth + 1
+      }-01`;
+      _this.start = start;
+      _this.end = endTwo;
+      _this.months.push(start);
+      _this.months.push(end);
+      _this.searchData();
     },
     searchData() {
       var _this = this;
@@ -77,25 +81,33 @@ export default {
       var getDate = newend.getDate();
       getDate = getDate < 10 ? "0" + getDate : getDate;
       var endDateTwo = `${newend.getFullYear()}-${month}-${getDate}`;
-      _this.start=_this.months[0];
-      _this.end=endDateTwo
+      _this.start = _this.months[0];
+      _this.end = endDateTwo;
       _this.loadNumData();
     },
     loadNumData() {
       var _this = this;
-      console.log("接口调用之前传输的数据为",{
-          start: _this.start,
-          end: _this.end
-        });
+      _this.headData = [];
+      _this.dataList = [];
       _this.$store
         .dispatch("bi/getCpaymentNum", {
           start: _this.start,
           end: _this.end
         })
         .then(res => {
-          console.log("请求消费频次的数据为",res)
-
-
+          for (let t = 0; t < res.length; t++) {
+            const element = res[t];
+            _this.headData.push(element.DateTime);
+            _this.dataList.push({
+              value: element.Count, //总单数
+              name: element.DateTime,
+              actlyPayed: element.ActlyPayed,
+              totalAmount: element.TotalAmount
+            });
+          }
+          _this.$nextTick(function() {
+            _this.initECharts();
+          });
         });
     },
     initECharts() {
@@ -127,19 +139,9 @@ export default {
             // 坐标轴指示器，坐标轴触发有效
             type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
           },
-          // formatter:'{b}<br />{a0}: {c0}<br />占比: {a}%'
           formatter: function(params) {
-            return (
-              params[0].name +
-              "<br/>" +
-              params[0].seriesName +
-              ":" +
-              params[0].value +
-              "<br/>" +
-              "占比:" +
-              params[0].data +
-              "<br/>"
-            );
+            var result=`消费次数：${params[0].value}<br/>账单金额：${params[0].data.totalAmount}<br/>实付金额：${params[0].data.actlyPayed}`
+            return result;
           }
         },
         grid: {
@@ -151,7 +153,7 @@ export default {
         xAxis: [
           {
             type: "category",
-            data: ["70后", "80后", "90后", "00后"],
+            data: _this.headData,
             axisTick: {
               alignWithLabel: true
             }
@@ -179,7 +181,7 @@ export default {
                 color: "#666666"
               }
             },
-            data: [10, 52, 200, 334]
+            data: _this.dataList
           }
         ]
       });

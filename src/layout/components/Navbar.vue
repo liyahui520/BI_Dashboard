@@ -92,7 +92,7 @@ export default {
   },
   created() {
     var _this = this;
-    console.log("本地存在的stroe为", _this.$store.getters.name);
+    // console.log("本地存在的stroe为", _this.$store.getters.name);
     _this.userName = _this.$store.getters.name;
   },
   methods: {

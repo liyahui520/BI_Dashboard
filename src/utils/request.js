@@ -47,7 +47,8 @@ service.interceptors.response.use(
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 200) {
       Message({
-        message: res.msg || 'Error',
+        // message: res.msg || 'Error',
+        message: "暂无数据",
         type: 'error'
       })
 
@@ -64,7 +65,8 @@ service.interceptors.response.use(
           })
         })
       }
-      return Promise.reject(new Error(res.msg || 'Error'))
+      // return Promise.reject(new Error(res.msg || 'Error'))
+      return Promise.reject(new Error("暂无数据"))
     } else {
       return res
     }
@@ -72,7 +74,8 @@ service.interceptors.response.use(
   error => {
     console.log('err' + error) // for debug
     Message({
-      message: error.msg||'Error',
+      // message: error.msg||'Error',
+      message: "暂无数据",
       type: 'error'
     })
     return Promise.reject(error)

@@ -33,7 +33,7 @@ export default {
             percentNum: element.PercentNum
           });
         }
-        console.log("请求客户来源数据结果为", res);
+        // console.log("请求客户来源数据结果为", res);
         _this.$nextTick(function() {
           _this.initECharts();
         });
@@ -52,7 +52,6 @@ export default {
             type: "shadow"
           },
           formatter: function(params) {
-            console.log("value", params);
             return (
               params[0].name +
               "<br/>数量：" +
