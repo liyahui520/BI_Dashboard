@@ -17,7 +17,6 @@
       </el-header>
       <!-- table区域 -->
       <el-main>
-
         <el-table
           :data="this.lableData"
           row-class-name="row"
