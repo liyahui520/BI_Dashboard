@@ -1,22 +1,28 @@
 <template>
   <div class="app-container">
     <el-card>
-      <!-- 表单区域 -->
-      <el-header>
-        <el-form :inline="true" class="demo-form-inline">
-          <el-form-item :label="$t('pmedicines.DrugsName')">
-            <!-- <el-input
-              v-model="params.params.drugsName"
-              :placeholder="$t('pmedicines.DrugsNameDesc')"
-            ></el-input> -->
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click.native="GetTableData">{{$t('query')}}</el-button>
-          </el-form-item>
-        </el-form>
-      </el-header>
       <!-- table区域 -->
       <el-main>
+        <!-- <el-table
+          :data="this.lableData"
+          row-class-name="row"
+          cell-class-name="column"
+          v-loading="loading"
+          border
+          stripe
+          align="center"
+          style="width: 99.9%;height:100%;overflow:hidden;"
+        >
+          <span v-for="(item1,index1) in data" :key="index1">
+            <el-table-column v-if="item1!='name'" :prop="item1" :width="'110px'" :label="item1">
+              <template slot-scope="scope">{{scope.row[item1]}}</template>
+            </el-table-column>
+            <el-table-column v-else :prop="item1" :width="'110px'" fixed="left" :label="item1">
+              <template slot-scope="scope">{{scope.row[item1]}}</template>
+            </el-table-column>
+          </span>
+        </el-table> -->
+
         <el-table
           :data="this.lableData"
           row-class-name="row"
