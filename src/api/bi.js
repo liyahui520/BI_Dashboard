@@ -110,3 +110,28 @@ export function getRunCpayments(data) {
     data
   })
 }
+
+
+/**
+ * 
+ * @param {营收报表数据统计} data 
+ */
+export function getRevenueExpend(data) {
+  return request({
+    url: '/BI/GetRevenueExpend',
+    method: 'post',
+    data
+  })
+}
+
+/**
+ * 
+ * @param {营收报表记录数据统计} data 
+ */
+export function getPMedicinesBuy(data) {
+  return request({
+    url: '/BI/GetPMedicinesBuy',
+    method: 'post',
+    data
+  })
+}

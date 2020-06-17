@@ -17,16 +17,6 @@
         <el-form-item>
           <el-button type="primary" @click.native="searchData">{{$t('query')}}</el-button>
         </el-form-item>
-        <!-- <el-form-item>
-          <el-tooltip placement="right">
-            <div slot="content">
-              第一行内容
-              <br />
-              第二行内容
-            </div>
-            <i class="el-icon-info"></i>
-          </el-tooltip>
-        </el-form-item> -->
       </el-form>
     </el-header>
     <!-- table区域 -->
@@ -155,21 +145,18 @@ export default {
     loadLater: function() {
       var _this = this;
       _this.loading = true;
-      console.log("最近一次消费的数据加载")
       _this.$store
         .dispatch("bi/getPcustomersCpayments", _this.params)
         .then(res => {
           _this.loading = false;
           _this.data = [];
           _this.lableData = [];
-          console.log("res.header的数据为", res.header);
           for (let t = 0; t < res.header.length; t++) {
             const element = res.header[t];
             if (element != "PageCount") _this.data.push(element);
           }
           _this.lableData = res.tbody;
           if (_this.lableData.length > 0) {
-            console.log("数据总行数为", _this.lableData[0]["PageCount"]);
             _this.total = parseInt(_this.lableData[0]["PageCount"]);
           }
         });
