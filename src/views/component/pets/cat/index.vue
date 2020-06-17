@@ -37,16 +37,6 @@
 <script>
 import echarts from "echarts";
 export default {
-  props: {
-    catHeadData: {
-      type: [Array],
-      default: []
-    },
-    catBodyData: {
-      type: [Array],
-      default: []
-    }
-  },
   data() {
     return {
       data: [],
@@ -58,43 +48,38 @@ export default {
       isHasData: false
     };
   },
-  created(){
-    var _this=this;
-    _this.loading=true;
-  },
-  watch: {
-    'catHeadData': function(newValue, oldValue) {
-      var _this=this;
-      _this.loading=false;
-      if (newValue.length > 0) {
-        _this.loadPetsData();
-      }
-    }
+  created() {
+    var _this = this;
+    _this.loadPetsData();
   },
   methods: {
-    /**
-     * 获取目录信息
-     */
+    //获取目录信息
     loadPetsData: function() {
       var _this = this;
-      _this.data = _this.catHeadData;
-      _this.lableData = _this.catBodyData;
+      _this.data = [];
+      _this.lableData = [];
       _this.dataList = [];
-      for (let t = 0; t < _this.lableData.length; t++) {
-        const pinInfo = _this.lableData[t];
-        if (parseFloat(pinInfo["总数"]) > 0) {
-          _this.dataList.push({
-            value: pinInfo["总数"],
-            name: pinInfo["品种"]
+      _this.loading = true;
+      _this.$store.dispatch("bi/getPetFrom", { type: 2 }).then(res => {
+        _this.loading = false;
+        _this.lableData=res.tbody;
+        _this.data=res.header;
+        for (let t = 0; t < _this.lableData.length; t++) {
+          const pinInfo = _this.lableData[t];
+          if (parseFloat(pinInfo["总数"]) > 0) {
+            _this.dataList.push({
+              value: pinInfo["总数"],
+              name: pinInfo["品种"]
+            });
+          }
+        }
+        if (_this.dataList.length > 0) {
+          _this.isHasData = true;
+          _this.$nextTick(function() {
+            _this.initECharts();
           });
         }
-      }
-      if (_this.dataList.length > 0) {
-        _this.isHasData = true;
-        _this.$nextTick(function() {
-          _this.initECharts();
-        });
-      }
+      });
     },
     initECharts() {
       var _this = this;

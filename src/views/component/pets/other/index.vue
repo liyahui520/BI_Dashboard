@@ -37,16 +37,6 @@
 <script>
 import echarts from "echarts";
 export default {
-  props: {
-    otherHeadData: {
-      type: [Array],
-      default: []
-    },
-    otherBodyData: {
-      type: [Array],
-      default: []
-    }
-  },
   data() {
     return {
       data: [],
@@ -60,44 +50,37 @@ export default {
   },
   created() {
     var _this = this;
-    _this.loading = true;
-  },
-  watch: {
-    'otherHeadData': function(newValue, oldValue) {
-      var _this = this;
-      _this.loading = false;
-      if (newValue.length > 0) {
-        _this.loadPetsData();
-      }
-    }
+    _this.loadPetsData();
+
   },
   methods: {
-    /**
-     * 获取目录信息
-     */
+    //获取目录信息
     loadPetsData: function() {
       var _this = this;
-      _this.data = _this.otherHeadData;
-      _this.lableData = _this.otherBodyData;
-      // _this.headData = [];
+      _this.data = [];
+      _this.lableData = [];
       _this.dataList = [];
-      for (let t = 0; t < _this.lableData.length; t++) {
-        const pinInfo = _this.lableData[t];
-        var cusValue = JSON.stringify(pinInfo);
-        if (parseFloat(pinInfo["总数"]) > 0) {
-          _this.dataList.push({
-            value: pinInfo["总数"],
-            name: pinInfo["品种"],
-            cusValue: cusValue
+      _this.loading = true;
+      _this.$store.dispatch("bi/getPetFrom", { type: 3 }).then(res => {
+        _this.loading = false;
+        _this.lableData=res.tbody;
+        _this.data=res.header;
+        for (let t = 0; t < _this.lableData.length; t++) {
+          const pinInfo = _this.lableData[t];
+          if (parseFloat(pinInfo["总数"]) > 0) {
+            _this.dataList.push({
+              value: pinInfo["总数"],
+              name: pinInfo["品种"]
+            });
+          }
+        }
+        if (_this.dataList.length > 0) {
+          _this.isHasData = true;
+          _this.$nextTick(function() {
+            _this.initECharts();
           });
         }
-      }
-      if (_this.dataList.length > 0) {
-        _this.isHasData = true;
-        _this.$nextTick(function() {
-          _this.initECharts();
-        });
-      }
+      });
     },
     initECharts() {
       var _this = this;

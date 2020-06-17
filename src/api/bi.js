@@ -135,3 +135,17 @@ export function getPMedicinesBuy(data) {
     data
   })
 }
+
+
+
+/**
+ * 
+ * @param {获取单个宠物数据统计} data type=1是dog，type=2是cat，type=3是other
+ */
+export function getPetFrom(data) {
+  return request({
+    url: '/BI/GetPetFrom',
+    method: 'post',
+    data
+  })
+}

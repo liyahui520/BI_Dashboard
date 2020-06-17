@@ -1,15 +1,15 @@
 <template>
   <div class="app-container">
     <el-card>
-      <el-tabs v-model="activeName" type="card">
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="猫" name="cat">
-          <cat :catHeadData="catHeadData" :catBodyData="catBodyData" />
+          <cat v-if="currentName=='cat'" />
         </el-tab-pane>
         <el-tab-pane label="狗" name="dog">
-          <dog :dogHeadData="dogHeadData" :dogBodyData="dogBodyData" />
+          <dog v-if="currentName=='dog'" />
         </el-tab-pane>
         <el-tab-pane label="其他" name="other">
-          <other :otherHeadData="otherHeadData" :otherBodyData="otherBodyData" />
+          <other v-if="currentName=='other'" />
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -28,29 +28,13 @@ export default {
   data() {
     return {
       activeName: "cat",
-      catHeadData: [],
-      catBodyData: [],
-      dogHeadData: [],
-      dogBodyData: [],
-      otherHeadData: [],
-      otherBodyData: []
+      currentName: "cat"
     };
   },
-  created() {
-    var _this=this;
-    _this.loadPetsData();
-  },
   methods: {
-    loadPetsData: function() {
+    handleClick(tab, event) {
       var _this = this;
-      _this.$store.dispatch("bi/getPPetsData").then(res => {
-        _this.catHeadData = res.header.cat;
-        _this.catBodyData = res.tbody.cat;
-        _this.dogHeadData = res.header.dog;
-        _this.dogBodyData = res.tbody.dog;
-        _this.otherHeadData = res.header.other;
-        _this.otherBodyData = res.tbody.other;
-      });
+      _this.currentName = tab.paneName;
     }
   }
 };

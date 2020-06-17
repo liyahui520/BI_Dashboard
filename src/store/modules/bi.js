@@ -1,4 +1,17 @@
-import { gettest,getPcustomersCpayments,getBiGender,getBirthDatePercent,getCustomerSource,getPPetsData,getCpaymentNum,getLateCpayments,getRunCpayments,getRevenueExpend,getPMedicinesBuy } from '@/api/bi'
+import {
+  gettest,
+  getPcustomersCpayments,
+  getBiGender,
+  getBirthDatePercent,
+  getCustomerSource,
+  getPPetsData,
+  getCpaymentNum,
+  getLateCpayments,
+  getRunCpayments,
+  getRevenueExpend,
+  getPMedicinesBuy,
+  getPetFrom
+} from '@/api/bi'
 
 
 const state = {
@@ -26,10 +39,14 @@ const mutations = {
 
 const actions = {
   // get user info
-  gettest({ commit  }) {
+  gettest({
+    commit
+  }) {
     return new Promise((resolve, reject) => {
       gettest().then(response => {
-        const { data } = response 
+        const {
+          data
+        } = response
         console.log(data)
         resolve(data)
       }).catch(error => {
@@ -37,50 +54,70 @@ const actions = {
       })
     })
   },
-  getPcustomersCpayments({ commit  },params) {
+  getPcustomersCpayments({
+    commit
+  }, params) {
     return new Promise((resolve, reject) => {
       getPcustomersCpayments(params).then(response => {
-        const { data } = response 
+        const {
+          data
+        } = response
         resolve(data)
       }).catch(error => {
         reject(error)
       })
     })
   },
-  getBiGender({ commit  }) {
+  getBiGender({
+    commit
+  }) {
     return new Promise((resolve, reject) => {
       getBiGender().then(response => {
-        const { data } = response 
+        const {
+          data
+        } = response
         resolve(data)
       }).catch(error => {
         reject(error)
       })
     })
   },
-  getBirthDatePercent({ commit  }) {
+  getBirthDatePercent({
+    commit
+  }) {
     return new Promise((resolve, reject) => {
       getBirthDatePercent().then(response => {
-        const { data } = response 
+        const {
+          data
+        } = response
         resolve(data)
       }).catch(error => {
         reject(error)
       })
     })
   },
-  getCustomerSource({ commit  }) {
+  getCustomerSource({
+    commit
+  }) {
     return new Promise((resolve, reject) => {
       getCustomerSource().then(response => {
-        const { data } = response 
+        const {
+          data
+        } = response
         resolve(data)
       }).catch(error => {
         reject(error)
       })
     })
   },
-  getPPetsData({ commit  }) {
+  getPPetsData({
+    commit
+  }) {
     return new Promise((resolve, reject) => {
       getPPetsData().then(response => {
-        const { data } = response 
+        const {
+          data
+        } = response
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -88,50 +125,84 @@ const actions = {
     })
   },
 
-  getCpaymentNum({ commit  },params) {
+  getCpaymentNum({
+    commit
+  }, params) {
     return new Promise((resolve, reject) => {
       getCpaymentNum(params).then(response => {
-        const { data } = response 
+        const {
+          data
+        } = response
         resolve(data)
       }).catch(error => {
         reject(error)
       })
     })
   },
-  getLateCpayments({ commit  },params) {
+  getLateCpayments({
+    commit
+  }, params) {
     return new Promise((resolve, reject) => {
       getLateCpayments(params).then(response => {
-        const { data } = response 
+        const {
+          data
+        } = response
         resolve(data)
       }).catch(error => {
         reject(error)
       })
     })
   },
-  getRunCpayments({ commit  },params) {
+  getRunCpayments({
+    commit
+  }, params) {
     return new Promise((resolve, reject) => {
       getRunCpayments(params).then(response => {
-        const { data } = response 
+        const {
+          data
+        } = response
         resolve(data)
       }).catch(error => {
         reject(error)
       })
     })
   },
-  getRevenueExpend({ commit  },params) {
+  getRevenueExpend({
+    commit
+  }, params) {
     return new Promise((resolve, reject) => {
       getRevenueExpend(params).then(response => {
-        const { data } = response 
+        const {
+          data
+        } = response
         resolve(data)
       }).catch(error => {
         reject(error)
       })
     })
   },
-  getPMedicinesBuy({ commit  },params) {
+  getPMedicinesBuy({
+    commit
+  }, params) {
     return new Promise((resolve, reject) => {
       getPMedicinesBuy(params).then(response => {
-        const { data } = response 
+        const {
+          data
+        } = response
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getPetFrom({
+    commit
+  }, params) {
+    return new Promise((resolve, reject) => {
+      getPetFrom(params).then(response => {
+        const {
+          data
+        } = response
         resolve(data)
       }).catch(error => {
         reject(error)
