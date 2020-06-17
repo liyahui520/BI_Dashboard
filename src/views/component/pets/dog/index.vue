@@ -1,37 +1,35 @@
 <template>
   <div class="petsCat">
-    <el-card>
-      <el-main class="mainClass">
-        <div :class="isHasData?'tableClass':'tableClassTwo'">
-          <el-table
-            :data="this.lableData"
-            row-class-name="row"
-            cell-class-name="column"
-            v-loading="loading"
-            border
-            align="left"
-            style="height:100%;overflow:hidden;"
-          >
-            <span v-for="(item1,index1) in data" :key="index1">
-              <el-table-column v-if="item1!='品种'" :prop="item1" :width="'110px'" :label="item1">
-                <template slot-scope="scope">{{scope.row[item1]}}</template>
-              </el-table-column>
-              <el-table-column v-else :prop="item1" :width="'110px'" fixed="left" :label="item1">
-                <template slot-scope="scope">{{scope.row[item1]}}</template>
-              </el-table-column>
-            </span>
-          </el-table>
-        </div>
+    <el-main class="mainClass">
+      <div :class="isHasData?'tableClass':'tableClassTwo'">
+        <el-table
+          :data="this.lableData"
+          row-class-name="row"
+          cell-class-name="column"
+          v-loading="loading"
+          border
+          align="left"
+          style="height:100%;overflow:hidden;"
+        >
+          <span v-for="(item1,index1) in data" :key="index1">
+            <el-table-column v-if="item1!='品种'" :prop="item1" :width="'110px'" :label="item1">
+              <template slot-scope="scope">{{scope.row[item1]}}</template>
+            </el-table-column>
+            <el-table-column v-else :prop="item1" :width="'110px'" fixed="left" :label="item1">
+              <template slot-scope="scope">{{scope.row[item1]}}</template>
+            </el-table-column>
+          </span>
+        </el-table>
+      </div>
 
-        <div v-if="isHasData" class="echartClass">
-          <div
-            id="echartdog"
-            class="chart"
-            style="height:600px;width:600px;margin:auto;padding:100px auto;"
-          ></div>
-        </div>
-      </el-main>
-    </el-card>
+      <div v-if="isHasData" class="echartClass">
+        <div
+          id="echartdog"
+          class="chart"
+          style="height:600px;width:600px;margin:auto;padding:100px auto;"
+        ></div>
+      </div>
+    </el-main>
   </div>
 </template>
 <script>
@@ -51,7 +49,7 @@ export default {
   created() {
     var _this = this;
     _this.loading = true;
-        _this.loadPetsData();
+    _this.loadPetsData();
   },
   methods: {
     //获取目录信息
@@ -63,8 +61,8 @@ export default {
       _this.loading = true;
       _this.$store.dispatch("bi/getPetFrom", { type: 1 }).then(res => {
         _this.loading = false;
-        _this.lableData=res.tbody;
-        _this.data=res.header;
+        _this.lableData = res.tbody;
+        _this.data = res.header;
         for (let t = 0; t < _this.lableData.length; t++) {
           const pinInfo = _this.lableData[t];
           if (parseFloat(pinInfo["总数"]) > 0) {
