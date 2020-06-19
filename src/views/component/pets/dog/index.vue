@@ -1,7 +1,6 @@
 <template>
   <div class="petsCat">
     <el-main class="mainClass">
-      <div :class="isHasData?'tableClass':'tableClassTwo'">
         <el-table
           :data="this.lableData"
           row-class-name="row"
@@ -12,23 +11,14 @@
           style="height:100%;overflow:hidden;"
         >
           <span v-for="(item1,index1) in data" :key="index1">
-            <el-table-column v-if="item1!='品种'" :prop="item1" :width="'110px'" :label="item1">
+            <el-table-column v-if="item1!='品种'" :prop="item1" sortable  :label="item1">
               <template slot-scope="scope">{{scope.row[item1]}}</template>
             </el-table-column>
-            <el-table-column v-else :prop="item1" :width="'110px'" fixed="left" :label="item1">
+            <el-table-column v-else :prop="item1" fixed="left" sortable :label="item1">
               <template slot-scope="scope">{{scope.row[item1]}}</template>
             </el-table-column>
           </span>
         </el-table>
-      </div>
-
-      <div v-if="isHasData" class="echartClass">
-        <div
-          id="echartdog"
-          class="chart"
-          style="height:600px;width:600px;margin:auto;padding:100px auto;"
-        ></div>
-      </div>
     </el-main>
   </div>
 </template>
@@ -63,21 +53,21 @@ export default {
         _this.loading = false;
         _this.lableData = res.tbody;
         _this.data = res.header;
-        for (let t = 0; t < _this.lableData.length; t++) {
-          const pinInfo = _this.lableData[t];
-          if (parseFloat(pinInfo["总数"]) > 0) {
-            _this.dataList.push({
-              value: pinInfo["总数"],
-              name: pinInfo["品种"]
-            });
-          }
-        }
-        if (_this.dataList.length > 0) {
-          _this.isHasData = true;
-          _this.$nextTick(function() {
-            _this.initECharts();
-          });
-        }
+        // for (let t = 0; t < _this.lableData.length; t++) {
+        //   const pinInfo = _this.lableData[t];
+        //   if (parseFloat(pinInfo["总数"]) > 0) {
+        //     _this.dataList.push({
+        //       value: pinInfo["总数"],
+        //       name: pinInfo["品种"]
+        //     });
+        //   }
+        // }
+        // if (_this.dataList.length > 0) {
+        //   _this.isHasData = true;
+        //   _this.$nextTick(function() {
+        //     _this.initECharts();
+        //   });
+        // }
       });
     },
     initECharts() {
@@ -140,18 +130,6 @@ export default {
 </script> 
 <style lang="scss" scoped>
 .petsCat {
-  .el-main {
-    display: flex;
-    justify-content: space-around;
-    .tableClass {
-      width: 41%;
-    }
-    .tableClassTwo {
-      width: 100%;
-    }
-    .echartClass {
-      width: 50%;
-    }
-  }
+
 }
 </style>

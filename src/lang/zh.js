@@ -68,10 +68,10 @@ export default {
     products: '产品管理',
     Unit: '单位',
     Base: '基础数据',
-    Pets: '宠物',
-    Petsmaster: '宠主',
-    Case: '病例',
-    Revenue: '营收',
+    Pets: '宠物统计',
+    Petsmaster: '宠主统计',
+    Case: '病例统计',
+    Revenue: '营收统计',
     Testeachart:'测试Echart'
   },
   navbar: {

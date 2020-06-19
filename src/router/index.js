@@ -132,13 +132,13 @@ export const asyncRoutes = [
   // petsRoute,
   petsMasterRoute,
   // caseRoute,
-  revenueRoute,
+  // revenueRoute,
   // testechartRoute,
   { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
-  base:'/dash/',
+  // base:'/dash/',
   mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes

@@ -33,22 +33,22 @@
       >
         <el-table-column label="年月" prop="年月" align="center"></el-table-column>
         <el-table-column label="洗美">
-          <el-table-column prop="洗美_01" :width="'130px'" label="洗美金额"></el-table-column>
-          <el-table-column prop="洗美_02" :width="'130px'" label="洗美占比"></el-table-column>
-          <el-table-column prop="洗美_03" :width="'130px'" label="洗美环比"></el-table-column>
-          <el-table-column prop="洗美_04" :width="'130px'" label="洗美同比"></el-table-column>
+          <el-table-column prop="洗美_01" label="收入"></el-table-column>
+          <el-table-column prop="洗美_02" label="占比"></el-table-column>
+          <el-table-column prop="洗美_03" label="环比"></el-table-column>
+          <el-table-column prop="洗美_04" label="同比"></el-table-column>
         </el-table-column>
         <el-table-column label="诊疗">
-          <el-table-column prop="诊疗_01" :width="'130px'" label="诊疗金额"></el-table-column>
-          <el-table-column prop="诊疗_02" :width="'130px'" label="诊疗占比"></el-table-column>
-          <el-table-column prop="诊疗_03" :width="'130px'" label="诊疗环比"></el-table-column>
-          <el-table-column prop="诊疗_04" :width="'130px'" label="诊疗同比"></el-table-column>
+          <el-table-column prop="诊疗_01" label="收入"></el-table-column>
+          <el-table-column prop="诊疗_02" label="占比"></el-table-column>
+          <el-table-column prop="诊疗_03" label="环比"></el-table-column>
+          <el-table-column prop="诊疗_04" label="同比"></el-table-column>
         </el-table-column>
-        <el-table-column label="消费">
-          <el-table-column prop="消费_01" :width="'130px'" label="消费金额"></el-table-column>
-          <el-table-column prop="消费_02" :width="'130px'" label="消费占比"></el-table-column>
-          <el-table-column prop="消费_03" :width="'130px'" label="消费环比"></el-table-column>
-          <el-table-column prop="消费_04" :width="'130px'" label="消费同比"></el-table-column>
+        <el-table-column label="商品销售">
+          <el-table-column prop="消费_01" label="收入"></el-table-column>
+          <el-table-column prop="消费_02" label="占比"></el-table-column>
+          <el-table-column prop="消费_03" label="环比"></el-table-column>
+          <el-table-column prop="消费_04" label="同比"></el-table-column>
         </el-table-column>
         <el-table-column label="合计" prop="合计" align="center"></el-table-column>
       </el-table>
