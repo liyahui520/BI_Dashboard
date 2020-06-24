@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo,getUserList } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -38,6 +38,16 @@ const actions = {
         commit('SET_TOKEN', data.Authorization)
         setToken(data.Authorization)
         resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getUserList({ commit }, params) {
+    return new Promise((resolve, reject) => {
+      getUserList(params).then(response => {
+        const { data } = response
+        resolve(data)
       }).catch(error => {
         reject(error)
       })

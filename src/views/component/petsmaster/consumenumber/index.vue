@@ -3,7 +3,7 @@
     <!-- 表单区域 -->
     <el-header>
       <el-form :inline="true" class="demo-form-inline">
-        <el-form-item label="月份">
+        <el-form-item label="统计周期">
           <el-date-picker
             v-model="months"
             type="monthrange"
@@ -14,13 +14,39 @@
             :picker-options="pickerOptions"
           ></el-date-picker>
         </el-form-item>
+        <el-form-item label="客户姓名">
+          <el-select
+            v-model="pcuid"
+            filterable
+            clearable
+            remote
+            reserve-keyword
+            placeholder="姓名或手机号"
+            :remote-method="remoteMethod"
+            :loading="loading"
+            @change="searchData"
+          >
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
 
         <el-form-item>
           <el-button type="primary" @click.native="searchData">{{$t('query')}}</el-button>
         </el-form-item>
       </el-form>
     </el-header>
-    <div id="echartsconsumenumber" class="chart" style="height:600px;width:1300px;margin:auto;"></div>
+    <el-main>
+      <div id="echartsconsumenumber" class="chart" style="height:600px;width:1300px;margin:auto;"></div>
+    </el-main>
+    <div class="remark">
+      注：
+      <br/>1、消费频次：默认显示所有客户的消费频次统计
+    </div>
   </div>
 </template>
 <script>
@@ -38,18 +64,36 @@ export default {
       start: "",
       end: "",
       headData: [],
-      dataList: []
+      dataList: [],
+      loading: false,
+      pcuid: "",
+      options: []
     };
   },
   created() {
     var _this = this;
     _this.handDefultDate();
   },
-  mounted() {
-    var _this = this;
-    // _this.searchData();
-  },
   methods: {
+    //远程方法
+    remoteMethod(query) {
+      var _this = this;
+      if (query !== "") {
+        _this.$store
+          .dispatch("user/getUserList", query)
+          .then(res => {
+            _this.options = res;
+          })
+          .catch(err => {
+            _this.$message({
+              message: "客户数据加载失败，请稍后重试",
+              type: "error"
+            });
+          });
+      } else {
+        this.options = [];
+      }
+    },
     handDefultDate() {
       var _this = this;
       var currentDate = new Date();
@@ -92,7 +136,8 @@ export default {
       _this.$store
         .dispatch("bi/getCpaymentNum", {
           start: _this.start,
-          end: _this.end
+          end: _this.end,
+          pcuid: _this.pcuid == "" ? -1 : _this.pcuid
         })
         .then(res => {
           for (let t = 0; t < res.length; t++) {
@@ -107,6 +152,12 @@ export default {
           }
           _this.$nextTick(function() {
             _this.initECharts();
+          });
+        })
+        .catch(err => {
+          _this.$message({
+            message: "消费频次数据加载失败，请稍后重试",
+            type: "error"
           });
         });
     },
@@ -140,7 +191,7 @@ export default {
             type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
           },
           formatter: function(params) {
-            var result=`消费次数：${params[0].value}<br/>账单金额：${params[0].data.totalAmount}<br/>实付金额：${params[0].data.actlyPayed}`
+            var result = `消费次数：${params[0].value}<br/>账单金额：${params[0].data.totalAmount}<br/>实付金额：${params[0].data.actlyPayed}`;
             return result;
           }
         },
@@ -191,4 +242,8 @@ export default {
 </script>
 
 <style scoped>
+.remark{
+  color: red;
+  font-size: 14px;
+}
 </style>

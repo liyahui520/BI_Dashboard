@@ -22,3 +22,10 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function getUserList(data) {
+  return request({
+    url: '/Pcu/getList?name='+data,
+    method: 'post'
+  })
+}

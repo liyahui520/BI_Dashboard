@@ -399,6 +399,23 @@ export function dateFormat(date) {
         (sec < 10 ? "0" + sec : sec);
       return newTime;
 }
+/**
+ * 返回只有日期的值
+ * @param {String} date 
+ */
+export function dateTimeFormat(date) {
+  var t = new Date(date); //row 表示一行数据, updateTime 表示要格式化的字段名称
+      var year = t.getFullYear(),
+        month = t.getMonth() + 1,
+        day = t.getDate()
+      var newTime =
+        year +
+        "-" +
+        (month < 10 ? "0" + month : month) +
+        "-" +
+        (day < 10 ? "0" + day : day)
+      return newTime;
+}
 
 const digitsRE = /(\d{3})(?=\d)/g
 /**

@@ -98,6 +98,12 @@ export default {
         .then(res => {
           _this.loading = false;
           _this.lableData = res.tbody.splice(1, res.tbody.length - 1);
+        }).catch(err => {
+          _this.$message({
+            message: "数据加载失败，请稍后重试",
+            type: "error"
+          });
+          _this.loading = false;
         });
     }
   }

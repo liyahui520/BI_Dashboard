@@ -9,6 +9,7 @@
           border
           align="left"
           style="height:100%;overflow:hidden;"
+          :header-cell-style="{background:'#FAFAFA',color:'#606266'}"
         >
           <span v-for="(item1,index1) in data" :key="index1">
             <el-table-column v-if="item1!='品种'" :prop="item1" sortable  :label="item1">
@@ -68,7 +69,13 @@ export default {
         //     _this.initECharts();
         //   });
         // }
-      });
+      }).catch(err => {
+          _this.$message({
+            message: "数据加载失败，请稍后重试",
+            type: "error"
+          });
+          _this.loading = false;
+        });
     },
     initECharts() {
       var _this = this;

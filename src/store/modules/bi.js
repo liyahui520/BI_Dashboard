@@ -10,7 +10,8 @@ import {
   getRunCpayments,
   getRevenueExpend,
   getPMedicinesBuy,
-  getPetFrom
+  getPetFrom,
+  getGetCEMs
 } from '@/api/bi'
 
 
@@ -200,6 +201,20 @@ const actions = {
   }, params) {
     return new Promise((resolve, reject) => {
       getPetFrom(params).then(response => {
+        const {
+          data
+        } = response
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getGetCEMs({
+    commit
+  }, params) {
+    return new Promise((resolve, reject) => {
+      getGetCEMs(params).then(response => {
         const {
           data
         } = response

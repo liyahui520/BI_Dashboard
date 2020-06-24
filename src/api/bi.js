@@ -149,3 +149,16 @@ export function getPetFrom(data) {
     data
   })
 }
+
+
+/**
+ * 
+ * @param {获取病例数据统计} data type=1是dog，type=2是cat，type=3是other
+ */
+export function getGetCEMs(data) {
+  return request({
+    url: '/BI/GetGetCEMs',
+    method: 'post',
+    data
+  })
+}

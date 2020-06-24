@@ -17,11 +17,14 @@
         <el-tab-pane label="消费频次" name="number">
           <consumenumber v-if="currentName=='number'" />
         </el-tab-pane>
-        <el-tab-pane label="年龄分布" name="age">
+        <!-- <el-tab-pane label="年龄分布" name="age">
           <age v-if="currentName=='age'" />
         </el-tab-pane>
         <el-tab-pane label="性别比例" name="sex">
           <sex v-if="currentName=='sex'" />
+        </el-tab-pane> -->
+        <el-tab-pane label="宠主分布" name="spread">
+          <spread v-if="currentName=='spread'" />
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -30,21 +33,23 @@
 <script>
 import { dateFormat } from "@/utils/index";
 import active from "../component/petsmaster/active/index";
-import age from "../component/petsmaster/age/index";
+// import age from "../component/petsmaster/age/index";
 import consumenumber from "../component/petsmaster/consumenumber/index";
 import latelyconsume from "../component/petsmaster/latelyconsume/index";
 import loss from "../component/petsmaster/loss/index";
-import sex from "../component/petsmaster/sex/index";
+// import sex from "../component/petsmaster/sex/index";
 import sourceCom from "../component/petsmaster/source/index";
+import spread from "../component/petsmaster/spread/index";
 export default {
   components: {
     active,
-    age,
+    // age,
     consumenumber,
     latelyconsume,
     loss,
-    sex,
-    sourceCom
+    // sex,
+    sourceCom,
+    spread
   },
   data() {
     return {
