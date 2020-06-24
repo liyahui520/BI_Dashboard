@@ -97,15 +97,15 @@ export default {
   components: { LangSelect, SocialSign },
   data() {
     const validateUsername = (rule, value, callback) => {
-      // if (!validUsername(value)) {
-      //   callback(new Error('Please enter the correct user name'))
-      // } else {
+      if (!validUsername(value)) {
+        callback(new Error('请输入正确的用户名'))
+      } else {
       callback();
-      // }
+      }
     };
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error("The password can not be less than 6 digits"));
+      if (value==null||value==''||value==undefined) {
+        callback(new Error("请输入密码"));
       } else {
         callback();
       }
