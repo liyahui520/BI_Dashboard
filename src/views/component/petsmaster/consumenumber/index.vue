@@ -29,7 +29,7 @@
             <el-option
               v-for="item in options"
               :key="item.value"
-              :label="item.name"
+              :label="item.name+'('+item.cellphone+')'"
               :value="item.id"
             ></el-option>
           </el-select>
@@ -45,7 +45,7 @@
     </el-main>
     <div class="remark">
       注：
-      <br/>1、消费频次：默认显示所有客户的消费频次统计
+      <br />1、消费频次：默认显示所有客户的消费频次统计
     </div>
   </div>
 </template>
@@ -181,19 +181,19 @@ export default {
               pixelRatio: 2
             },
             magicType: { show: true, type: ["line", "bar"] },
-            restore: { show: true }
-          }
+            restore: { show: true },
+          },
         },
         tooltip: {
           trigger: "axis",
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
-            type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+            type: "" // 默认为直线，可选为：'line' | 'shadow'
           },
           formatter: function(params) {
             var result = `消费次数：${params[0].value}<br/>账单金额：${params[0].data.totalAmount}<br/>实付金额：${params[0].data.actlyPayed}`;
             return result;
-          }
+          },
         },
         grid: {
           left: "3%",
@@ -219,11 +219,11 @@ export default {
           {
             name: "年龄分布",
             type: "bar",
-            barWidth: "60%",
+            barWidth: "20%",
             label: {
               rich: {
                 name: {
-                  textBorderColor: "#fff"
+                  // textBorderColor: "#fff"
                 }
               },
               normal: {
@@ -242,7 +242,7 @@ export default {
 </script>
 
 <style scoped>
-.remark{
+.remark {
   color: red;
   font-size: 14px;
 }

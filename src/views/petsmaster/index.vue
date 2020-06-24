@@ -2,6 +2,9 @@
   <div class="app-container">
     <el-card>
       <el-tabs v-model="activeName" type="card" @tab-click="loadData">
+        <el-tab-pane label="宠主分布" name="spread">
+          <spread v-if="currentName=='spread'" />
+        </el-tab-pane>
         <el-tab-pane label="客户来源" name="source">
           <sourceCom v-if="currentName=='source'" />
         </el-tab-pane>
@@ -23,9 +26,7 @@
         <el-tab-pane label="性别比例" name="sex">
           <sex v-if="currentName=='sex'" />
         </el-tab-pane> -->
-        <el-tab-pane label="宠主分布" name="spread">
-          <spread v-if="currentName=='spread'" />
-        </el-tab-pane>
+        
       </el-tabs>
     </el-card>
   </div>
@@ -53,8 +54,8 @@ export default {
   },
   data() {
     return {
-      activeName: "source",
-      currentName:'source'
+      activeName: "spread",
+      currentName:'spread'
     };
   },
   created() {

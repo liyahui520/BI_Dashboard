@@ -21,7 +21,7 @@
     </el-header>-->
     <!-- table区域 -->
     <el-main>
-      <div id="echartssource" class="chart" style="height:600px;width:800px;margin:auto;"></div>
+      <div id="echartssource" class="chart" style="height:600px;"></div>
     </el-main>
   </div>
 </template>
@@ -123,6 +123,10 @@ export default {
             data: _this.headData,
             axisTick: {
               alignWithLabel: true
+            },
+            axisLabel: {
+              interval: 0,
+              rotate: 40
             }
           }
         ],

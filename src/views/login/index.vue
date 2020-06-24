@@ -97,7 +97,7 @@ export default {
   components: { LangSelect, SocialSign },
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
+      if (value==null||value==''||value==undefined) {
         callback(new Error('请输入正确的用户名'))
       } else {
       callback();

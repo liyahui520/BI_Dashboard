@@ -4,12 +4,7 @@
     <el-header>
       <el-form :inline="true" class="demo-form-inline">
         <el-form-item label="最近">
-          <el-select
-            v-model="params.params.month"
-            style="width:70px"
-            filterable
-            placeholder="请选择"
-          >
+          <el-select v-model="params.params.month" style="width:70px" filterable placeholder="请选择">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -26,7 +21,14 @@
     </el-header>
     <!-- table区域 -->
     <el-main>
-      <el-table :data="lableData" row-class-name="row" v-loading="loading" border stripe :header-cell-style="{background:'#FAFAFA',color:'#606266'}">
+      <el-table
+        :data="lableData"
+        row-class-name="row"
+        v-loading="loading"
+        border
+        stripe
+        :header-cell-style="{background:'#FAFAFA',color:'#606266'}"
+      >
         <span v-for="(item1,index1) in data" :key="index1">
           <el-table-column
             v-if="item1=='序号'"
@@ -38,20 +40,10 @@
           >
             <template slot-scope="scope">{{scope.row[item1]}}</template>
           </el-table-column>
-          <el-table-column
-            v-else-if="item1=='最近消费日期'"
-            :prop="item1"
-            sortable
-            :label="item1"
-          >
+          <el-table-column v-else-if="item1=='最近消费日期'" :prop="item1" sortable :label="item1">
             <template slot-scope="scope">{{scope.row[item1]|dateFormat}}</template>
           </el-table-column>
-          <el-table-column
-            v-else
-            :prop="item1"
-            sortable
-            :label="item1"
-          >
+          <el-table-column v-else :prop="item1" sortable :label="item1">
             <template slot-scope="scope">{{scope.row[item1]}}</template>
           </el-table-column>
         </span>
@@ -70,7 +62,8 @@
     </el-footer>
     <div class="remark">
       注：
-      <br/>1、流失客户：最近{{params.params.month}}个月没有消费的客户
+      <br />
+      1、流失客户：最近{{params.params.month}}个月没有消费的客户
     </div>
   </div>
 </template>
@@ -123,32 +116,47 @@ export default {
     var _this = this;
     _this.loadLater();
   },
-    filters:{
+  filters: {
     //格式化时间
     dateFormat: function(row) {
       return dateTimeFormat(row);
-    },
+    }
   },
   methods: {
     loadLater: function() {
       var _this = this;
       _this.loading = true;
-      _this.$store.dispatch("bi/getRunCpayments", _this.params).then(res => {
-        _this.loading = false;
-        _this.data = [];
-        _this.lableData = res.tbody;
-        for (let t = 0; t < res.header.length; t++) {
-          const element = res.header[t];
-          if (element != "PageCount") _this.data.push(element);
-        }
-        if (_this.lableData.length > 0) {
-          _this.total = parseInt(_this.lableData[0]["PageCount"]);
-        }
-      }).catch(err => {
-          _this.$message({
-            message: "数据加载失败，请稍后重试",
-            type: "error"
-          });
+      _this.$store
+        .dispatch("bi/getRunCpayments", _this.params)
+        .then(res => {
+          _this.loading = false;
+          _this.data = [];
+          _this.lableData = res.tbody;
+          for (let t = 0; t < res.header.length; t++) {
+            const element = res.header[t];
+            if (element != "PageCount") _this.data.push(element);
+          }
+          if (_this.lableData.length > 0) {
+            _this.total = parseInt(_this.lableData[0]["PageCount"]);
+          }
+        })
+        .catch(err => {
+          if (err.hasOwnProperty("code")) {
+            if (err.msg == "暂无数据") {
+              _this.data = [];
+              _this.lableData = [];
+            } else {
+              _this.$message({
+                message: err.msg,
+                type: "error"
+              });
+            }
+          } else {
+            _this.$message({
+              message: "数据加载失败，请稍后重试",
+              type: "error"
+            });
+          }
           _this.loading = false;
         });
     },
@@ -163,7 +171,7 @@ export default {
 };
 </script>
 <style scoped>
-.remark{
+.remark {
   color: red;
   font-size: 14px;
 }
