@@ -36,7 +36,6 @@
           <el-table-column
             v-if="item1!='序号'"
             :prop="item1"
-            sortable
             :label="item1"
           >
             <template slot-scope="scope">{{scope.row[item1]}}</template>
