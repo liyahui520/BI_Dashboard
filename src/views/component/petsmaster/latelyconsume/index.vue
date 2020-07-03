@@ -3,7 +3,7 @@
     <!-- 表单区域 -->
     <el-header>
       <el-form :inline="true" class="demo-form-inline">
-        <el-form-item label="月份">
+        <el-form-item label="统计周期">
           <el-date-picker
             v-model="value1"
             type="monthrange"
@@ -30,32 +30,29 @@
         stripe
         align="center"
         style="width: 99.9%;height:100%;overflow:hidden;"
+        :header-cell-style="{background:'#FAFAFA',color:'#606266'}"
       >
         <span v-for="(item1,index1) in data" :key="index1">
           <el-table-column
             v-if="item1!='序号'"
             :prop="item1"
-            :width="'130px'"
-            sortable
             :label="item1"
           >
             <template slot-scope="scope">{{scope.row[item1]}}</template>
           </el-table-column>
-          <!-- <el-table-column
-            v-else-if="item1=='姓名'"
+          <el-table-column
+            v-else-if="item1=='日期'"
             :prop="item1"
-            :width="'130px'"
             fixed="left"
-            sortable
             :label="item1"
           >
-            <template slot-scope="scope">{{scope.row[item1]}}</template>
-          </el-table-column>-->
+            <template slot-scope="scope">{{scope.row[item1]|formatYearMonth}}</template>
+          </el-table-column>
           <el-table-column
             v-else
             :prop="item1"
-            :width="'130px'"
-            sortable
+            :width="'100px'"
+            align="center"
             fixed="left"
             :label="item1"
           >
@@ -109,6 +106,19 @@ export default {
       }
     };
   },
+  filters: {
+    formatYearMonth:function(value) {
+      console.log("value",value)
+      try {
+        var year = value.subString(0, 4);
+        var month = value.subString(3, 2);
+        return year + "-" + month;
+      } catch (err) {
+        return value;
+      }
+      return value;
+    }
+  },
   methods: {
     searchData() {
       var _this = this;
@@ -133,15 +143,6 @@ export default {
       _this.params.params.end = endDateTwo;
       _this.loadLater();
     },
-    // 表格头部样式
-    headerClass() {
-      return "table-header-class";
-    },
-
-    // element列表文字居中
-    cellStyle() {
-      return "text-align:center;line-height: 8px;";
-    },
     loadLater: function() {
       var _this = this;
       _this.loading = true;
@@ -159,14 +160,13 @@ export default {
           if (_this.lableData.length > 0) {
             _this.total = parseInt(_this.lableData[0]["PageCount"]);
           }
+        }).catch(err => {
+          _this.$message({
+            message: "数据加载失败，请稍后重试",
+            type: "error"
+          });
+          _this.loading = false;
         });
-    },
-    /**
-     * 格式化时间
-     */
-    dateFormat: function(row, column) {
-      //row 表示一行数据, updateTime 表示要格式化的字段名称
-      return dateFormat(row.insertdate);
     },
     //分页点击事件
     pagination(param) {

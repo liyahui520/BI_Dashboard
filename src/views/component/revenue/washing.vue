@@ -30,18 +30,17 @@
         stripe
         align="left"
         style="width: 99.9%;height:100%;overflow:hidden;"
+        :header-cell-style="{background:'#FAFAFA',color:'#606266'}"
       >
         <span v-for="(item1,index1) in headData" :key="index1">
           <el-table-column
             v-if="item1!='序号'"
             :prop="item1"
-            :width="'180px'"
-            sortable
             :label="item1"
           >
             <template slot-scope="scope">{{scope.row[item1]}}</template>
           </el-table-column>
-          <el-table-column v-else :prop="item1" :width="'130px'" fixed="left" :label="item1">
+          <el-table-column v-else :prop="item1" :width="'100px'" fixed="left" align="center" :label="item1">
             <template slot-scope="scope">{{scope.row[item1]}}</template>
           </el-table-column>
         </span>
@@ -126,7 +125,13 @@ export default {
         if (_this.tableData.length > 0) {
           _this.total = parseInt(_this.tableData[0]["PageCount"]);
         }
-      });
+      }).catch(err => {
+          _this.$message({
+            message: "数据加载失败，请稍后重试",
+            type: "error"
+          });
+          _this.loading = false;
+        });
     },
     //格式化时间
     dateFormat: function(row, column) {

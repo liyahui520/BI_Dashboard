@@ -46,11 +46,11 @@ service.interceptors.response.use(
     const res = response.data
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 200) {
-      Message({
-        // message: res.msg || 'Error',
-        message: "暂无数据",
-        type: 'error'
-      })
+      // Message({
+      //   // message: res.msg || 'Error',
+      //   message: "暂无数据",
+      //   type: 'error'
+      // })
 
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
@@ -66,18 +66,18 @@ service.interceptors.response.use(
         })
       }
       // return Promise.reject(new Error(res.msg || 'Error'))
-      return Promise.reject(new Error("暂无数据"))
+      return Promise.reject(res)
     } else {
       return res
     }
   },
   error => {
-    console.log('err' + error) // for debug
-    Message({
-      // message: error.msg||'Error',
-      message: "暂无数据",
-      type: 'error'
-    })
+    console.log('errTCC' + error) // for debug
+    // Message({
+    //   // message: error.msg||'Error',
+    //   message: "暂无数据",
+    //   type: 'error'
+    // })
     return Promise.reject(error)
   }
 )

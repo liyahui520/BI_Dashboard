@@ -131,8 +131,8 @@ export const asyncRoutes = [
   // biRouter,
   // petsRoute,
   petsMasterRoute,
-  // caseRoute,
-  // revenueRoute,
+  caseRoute,
+  revenueRoute,
   // testechartRoute,
   { path: '*', redirect: '/404', hidden: true }
 ]

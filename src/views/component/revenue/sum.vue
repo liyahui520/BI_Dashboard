@@ -33,19 +33,19 @@
       >
         <el-table-column label="年月" prop="年月" align="center"></el-table-column>
         <el-table-column label="洗美">
-          <el-table-column prop="洗美_01" label="收入"></el-table-column>
+          <el-table-column prop="洗美_01" label="收入（元）"></el-table-column>
           <el-table-column prop="洗美_02" label="占比"></el-table-column>
           <el-table-column prop="洗美_03" label="环比"></el-table-column>
           <el-table-column prop="洗美_04" label="同比"></el-table-column>
         </el-table-column>
         <el-table-column label="诊疗">
-          <el-table-column prop="诊疗_01" label="收入"></el-table-column>
+          <el-table-column prop="诊疗_01" label="收入（元）"></el-table-column>
           <el-table-column prop="诊疗_02" label="占比"></el-table-column>
           <el-table-column prop="诊疗_03" label="环比"></el-table-column>
           <el-table-column prop="诊疗_04" label="同比"></el-table-column>
         </el-table-column>
         <el-table-column label="商品销售">
-          <el-table-column prop="消费_01" label="收入"></el-table-column>
+          <el-table-column prop="消费_01" label="收入（元）"></el-table-column>
           <el-table-column prop="消费_02" label="占比"></el-table-column>
           <el-table-column prop="消费_03" label="环比"></el-table-column>
           <el-table-column prop="消费_04" label="同比"></el-table-column>
@@ -98,6 +98,12 @@ export default {
         .then(res => {
           _this.loading = false;
           _this.lableData = res.tbody.splice(1, res.tbody.length - 1);
+        }).catch(err => {
+          _this.$message({
+            message: "数据加载失败，请稍后重试",
+            type: "error"
+          });
+          _this.loading = false;
         });
     }
   }
