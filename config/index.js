@@ -56,7 +56,6 @@ module.exports = {
     assetsSubDirectory: 'static',
     // assetsPublicPath: '/dash/',
     assetsPublicPath: '/',
-
     /**
      * Source Maps
      */
