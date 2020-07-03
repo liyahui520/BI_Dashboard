@@ -162,3 +162,15 @@ export function getGetCEMs(data) {
     data
   })
 }
+
+/**
+ * 
+ * @param {获取诊疗各项收入统计} data type=1是dog，type=2是cat，type=3是other
+ */
+export function getZenLiaoCpayments(data) {
+  return request({
+    url: '/BI/GetZenLiaoCpayments',
+    method: 'post',
+    data
+  })
+}

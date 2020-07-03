@@ -11,7 +11,8 @@ import {
   getRevenueExpend,
   getPMedicinesBuy,
   getPetFrom,
-  getGetCEMs
+  getGetCEMs,
+  getZenLiaoCpayments
 } from '@/api/bi'
 
 
@@ -228,6 +229,18 @@ const actions = {
       })
     })
   },
+  getZenLiaoCpayments({ commit},params){
+    return new Promise((resolve, reject) => {
+      getZenLiaoCpayments(params).then(response => {
+        const {
+          data
+        } = response
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  }
 }
 
 export default {

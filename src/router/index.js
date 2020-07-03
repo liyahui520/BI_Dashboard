@@ -19,7 +19,7 @@ import petsMasterRoute from './modules/petsmaster'
 import caseRoute from './modules/case'
 import revenueRoute from './modules/revenue'
 import testechartRoute from './modules/testechart'
-
+import gexingRoute from './modules/gexing'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -133,6 +133,7 @@ export const asyncRoutes = [
   petsMasterRoute,
   caseRoute,
   revenueRoute,
+  gexingRoute,
   // testechartRoute,
   { path: '*', redirect: '/404', hidden: true }
 ]
