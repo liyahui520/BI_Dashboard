@@ -162,3 +162,15 @@ export function getGetCEMs(data) {
     data
   })
 }
+
+/**
+ * 
+ * @param {获取医生化验数据统计} data type=1是dog，type=2是cat，type=3是other
+ */
+export function getDoctorTest(data) {
+  return request({
+    url: '/BI/GetDoctorTest',
+    method: 'post',
+    data
+  })
+}

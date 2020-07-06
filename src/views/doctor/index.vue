@@ -1,5 +1,6 @@
 <template>
   <div class="sumClass">
+        <el-card>
     <!-- 表单区域 -->
     <el-header>
       <el-form :inline="true" class="demo-form-inline">
@@ -14,6 +15,13 @@
             :picker-options="pickerOptions"
           ></el-date-picker>
         </el-form-item>
+        <el-form-item label="是否启用">
+          <el-switch
+  v-model="enabled"
+  active-color="#13ce66"
+  inactive-color="#ff4949">
+</el-switch>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click.native="loadNumData">{{$t('query')}}</el-button>
         </el-form-item>
@@ -22,7 +30,7 @@
     <!-- table区域 -->
     <el-main>
       <el-table
-        :data="lableData"
+        :data="tbodyData"
         row-class-name="row"
         cell-class-name="column"
         v-loading="loading"
@@ -31,28 +39,24 @@
         align="center"
         style="width: 99.9%;height:100%;overflow:hidden;"
       >
-        <el-table-column label="年月" prop="年月" align="center"></el-table-column>
-        <el-table-column label="洗美">
-          <el-table-column prop="洗美_01" label="收入（元）"></el-table-column>
-          <el-table-column prop="洗美_02" label="占比"></el-table-column>
-          <el-table-column prop="洗美_03" label="环比"></el-table-column>
-          <el-table-column prop="洗美_04" label="同比"></el-table-column>
+        <el-table-column label="月份" prop="月份" align="center"></el-table-column>
+        <el-table-column v-for="(headInfo,index) in headData" :key="index" :label="headInfo">
+          <el-table-column label="化验数量">
+            <template slot-scope="scope">{{scope.row[headInfo+'_化验数量']|handNumber}}</template>
+          </el-table-column>
+          <el-table-column label="化验金额">
+            <template slot-scope="scope">{{scope.row[headInfo+'_化验金额']|handMoney}}</template>
+          </el-table-column>
+          <el-table-column label="诊疗收入">
+            <template slot-scope="scope">{{scope.row[headInfo+'_诊疗收入']|handMoney}}</template>
+          </el-table-column>
+          <el-table-column label="个人化验占比" width="110px">
+            <template slot-scope="scope">{{scope.row[headInfo+'_个人化验占比']|handBiLi}}</template>
+          </el-table-column>
         </el-table-column>
-        <el-table-column label="诊疗">
-          <el-table-column prop="诊疗_01" label="收入（元）"></el-table-column>
-          <el-table-column prop="诊疗_02" label="占比"></el-table-column>
-          <el-table-column prop="诊疗_03" label="环比"></el-table-column>
-          <el-table-column prop="诊疗_04" label="同比"></el-table-column>
-        </el-table-column>
-        <el-table-column label="商品销售">
-          <el-table-column prop="消费_01" label="收入（元）"></el-table-column>
-          <el-table-column prop="消费_02" label="占比"></el-table-column>
-          <el-table-column prop="消费_03" label="环比"></el-table-column>
-          <el-table-column prop="消费_04" label="同比"></el-table-column>
-        </el-table-column>
-        <el-table-column label="合计" prop="合计" align="center"></el-table-column>
-      </el-table>
+        </el-table>
     </el-main>
+        </el-card>
   </div>
 </template>
 <script>
@@ -66,14 +70,43 @@ export default {
         }
       },
       loading: false,
-      lableData: []
+      headData:[],
+      tbodyData:[],
+      enabled:true,
     };
   },
     created() {
     var _this = this;
     _this.handCurrentDateTime();
   },
+filters:{
+  handNumber(value){
+    console.log("value",value)
+    if(value!=null&&value!=''){
+      return value
+    }
+    else{
+      return "0"
+    }
+  },
+  handMoney(value){
+if(value!=null&&value!=''){
+      return value
+    }
+    else{
+      return "0.00"
+    }
+  },
+  handBiLi(value){
+    if(value!=null&&value!=''){
+      return value
+    }
+    else{
+      return "0.00%"
+    }
+  }
 
+},
   methods: {
     handCurrentDateTime(){
         var _this=this;
@@ -91,13 +124,17 @@ export default {
       _this.lableData = [];
       _this.loading = true;
       _this.$store
-        .dispatch("bi/getRevenueExpend", {
-          begin_date: _this.months[0],
-          end_date: _this.months[1]
+        .dispatch("bi/getDoctorTest", {
+            end: "2020-07-03",
+            start: "2020-07-03",
+            userid: -1,
+            userstatus: 0
         })
         .then(res => {
           _this.loading = false;
-          _this.lableData = res.tbody.splice(1, res.tbody.length - 1);
+          console.log("请求完毕以后的数据为",res)
+        _this.headData=res.header;
+        _this.tbodyData=res.tbody;
         }).catch(err => {
           _this.$message({
             message: "数据加载失败，请稍后重试",
