@@ -12,7 +12,8 @@ import {
   getPMedicinesBuy,
   getPetFrom,
   getGetCEMs,
-  getDoctorTest
+  getDoctorTest,
+  getZenLiaoCpayments
 } from '@/api/bi'
 
 
@@ -234,6 +235,20 @@ const actions = {
   }, params) {
     return new Promise((resolve, reject) => {
       getDoctorTest(params).then(response => {
+        const {
+          data
+        } = response
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getZenLiaoCpayments({
+    commit
+  }, params) {
+    return new Promise((resolve, reject) => {
+      getZenLiaoCpayments(params).then(response => {
         const {
           data
         } = response

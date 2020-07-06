@@ -165,11 +165,23 @@ export function getGetCEMs(data) {
 
 /**
  * 
- * @param {获取医生化验数据统计} data type=1是dog，type=2是cat，type=3是other
+ * @param {获取医生化验数据统计} 
  */
 export function getDoctorTest(data) {
   return request({
-    url: '/BI/GetDoctorTest',
+    url: '/BI/GetDoctorTest',    
+    method: 'post',
+    data
+  })
+}
+
+/**
+ * 
+ * @param {获取诊疗各项收入统计} data type=1是dog，type=2是cat，type=3是other
+ */
+export function getZenLiaoCpayments(data) {
+  return request({
+    url: '/BI/GetZenLiaoCpayments',
     method: 'post',
     data
   })
