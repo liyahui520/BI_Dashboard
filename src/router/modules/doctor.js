@@ -6,7 +6,7 @@ const doctorRouter = {
   path: '/doctor',
   component: Layout,
   meta: {
-    icon: 'money'
+    icon: 'user'
   },
   children: [
     {
