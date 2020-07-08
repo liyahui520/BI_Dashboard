@@ -101,9 +101,9 @@ const actions = {
   },
   getCustomerSource({
     commit
-  }) {
+  },params) {
     return new Promise((resolve, reject) => {
-      getCustomerSource().then(response => {
+      getCustomerSource(params).then(response => {
         const {
           data
         } = response

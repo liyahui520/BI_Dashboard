@@ -15,6 +15,16 @@
               :picker-options="pickerOptions"
             ></el-date-picker>
           </el-form-item>
+          <el-form-item label="角色">
+            <el-select v-model="roleid" filterable placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.id"
+                :label="item.rolename"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="是否启用">
             <el-switch v-model="enabled" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
           </el-form-item>
@@ -68,30 +78,33 @@ export default {
       loading: false,
       headData: [],
       tbodyData: [],
-      enabled: true
+      enabled: true,
+      roleid: null,
+      options: []
     };
   },
   created() {
     var _this = this;
+    _this.questRoleList();
     _this.handCurrentDateTime();
   },
   filters: {
     handNumber(value) {
-      if (value != null && value != "" && value!=undefined) {
+      if (value != null && value != "" && value != undefined) {
         return value;
       } else {
         return "0";
       }
     },
     handMoney(value) {
-      if (value != null && value != ""  && value!=undefined) {
+      if (value != null && value != "" && value != undefined) {
         return value;
       } else {
         return "0.00";
       }
     },
     handBiLi(value) {
-      if (value != null && value != ""  && value!=undefined) {
+      if (value != null && value != "" && value != undefined) {
         return value;
       } else {
         return "0.00%";
@@ -99,6 +112,14 @@ export default {
     }
   },
   methods: {
+    questRoleList() {
+      var _this = this;
+      _this.options = [];
+      _this.$store.dispatch("user/getRoleList").then(res => {
+        console.log("请求的结果数据为", res);
+        _this.options = res;
+      });
+    },
     handCurrentDateTime() {
       var _this = this;
       var currentDate = new Date();
@@ -116,15 +137,16 @@ export default {
     },
     loadCaseData() {
       var _this = this;
-      _this.lableData = [];
-      _this.headData=[];
+      _this.tbodyData = [];
+      _this.headData = [];
       _this.loading = true;
       _this.$store
         .dispatch("bi/getDoctorTest", {
           end: _this.months[1] + "-31",
           start: _this.months[0] + "-01",
           userid: -1,
-          userstatus: _this.enabled ? 0 : 1
+          userstatus: _this.enabled ? 0 : 1,
+          roleid: _this.roleid == null ? -1 : _this.roleid
         })
         .then(res => {
           _this.loading = false;
@@ -132,10 +154,16 @@ export default {
           _this.tbodyData = res.tbody;
         })
         .catch(err => {
-          _this.$message({
-            message: "数据加载失败，请稍后重试",
-            type: "error"
-          });
+          if (err.hasOwnProperty("code")) {
+            _this.tbodyData = [];
+            _this.headData = [];
+          } else {
+            _this.$message({
+              message: "数据加载失败，请稍后重试",
+              type: "error"
+            });
+          }
+
           _this.loading = false;
         });
     }
