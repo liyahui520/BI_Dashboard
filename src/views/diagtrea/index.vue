@@ -101,6 +101,7 @@ export default {
           start: _this.months[0]+'-01'
         })
         .then(res => {
+          console.log("获取的数据为",res);
           _this.loading = false;
           _this.caseHeadData = res.header;
           _this.caseBodyData = res.tbody;
