@@ -13,7 +13,9 @@ import {
   getPetFrom,
   getGetCEMs,
   getDoctorTest,
-  getZenLiaoCpayments
+  getZenLiaoCpayments,
+  getProviderSummary,
+  getProviderDetailSummary
 } from '@/api/bi'
 
 
@@ -249,6 +251,34 @@ const actions = {
   }, params) {
     return new Promise((resolve, reject) => {
       getZenLiaoCpayments(params).then(response => {
+        const {
+          data
+        } = response
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getProviderSummary({
+    commit
+  }, params) {
+    return new Promise((resolve, reject) => {
+      getProviderSummary(params).then(response => {
+        const {
+          data
+        } = response
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getProviderDetailSummary({
+    commit
+  }, params) {
+    return new Promise((resolve, reject) => {
+      getProviderDetailSummary(params).then(response => {
         const {
           data
         } = response

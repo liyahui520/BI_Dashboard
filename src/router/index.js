@@ -19,6 +19,7 @@ import petsMasterRoute from './modules/petsmaster'
 import caseRoute from './modules/case'
 import revenueRoute from './modules/revenue'
 import testechartRoute from './modules/testechart'
+import provideRoute from './modules/provider'
 
 import doctorRouter from './modules/doctor'
 
@@ -140,6 +141,7 @@ export const asyncRoutes = [
   doctorRouter,
 
   gexingRoute,
+  provideRoute,
   // testechartRoute,
   { path: '*', redirect: '/404', hidden: true }
 ]
