@@ -61,10 +61,43 @@
 
     <el-dialog
       title="详情"
+      top="15px"
       :visible.sync="dialogVisible"
+      :close-on-click-modal="false"
       width="80%"
       :before-close="handleClose">
-      <ProviderDeatil :months="detailMonths" :providerid="providerid" :data="detaildata" :lableData="detaillableData" :total="detailtotal" :pageSizes="detailpageSizes" :loading="detailloading" :params="detailparams" :loadDetailInfo="loadDetail"></ProviderDeatil>
+      <!-- <ProviderDeatil :months="detailMonths" :providerid="providerid" :data="detaildata" :lableData="detaillableData" :total="detailtotal" :pageSizes="detailpageSizes" :loading="detailloading" :params="detailparams" :loadDetailInfo="loadDetail"></ProviderDeatil> -->
+
+        <div class="app-container">
+          <el-card>
+            <div>
+              <!-- table区域 -->
+              <el-main>
+                <el-table :data="detaillableData" row-class-name="row" v-loading="detailloading" border stripe :header-cell-style="{background:'#FAFAFA',color:'#606266'}">
+                  <span v-for="(item1,index1) in detaildata" :key="index1">
+                    <el-table-column v-if="item1=='序号'" fixed="left" :prop="item1" :label="item1">
+                      <template slot-scope="scope">{{scope.row[item1]}}</template>
+                    </el-table-column>
+                    <el-table-column v-else :prop="item1" :label="item1">
+                      <template slot-scope="scope">{{scope.row[item1]}}</template>
+                    </el-table-column>
+                  </span>
+                </el-table>
+              </el-main>
+              <!-- 分页区域 -->
+              <el-footer>
+                <Pagination
+                  :total="detailtotal"
+                  :page="detailparams.currentPage"
+                  :limit="detailparams.pageSize"
+                  :pageSizes="detailpageSizes"
+                  :background="true"
+                  @pagination="detailpagination"
+                ></Pagination>
+              </el-footer>
+            </div>
+          </el-card>
+        </div>
 
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>
@@ -150,6 +183,8 @@ export default {
     handleEdit(index,obj){
       var _this=this;
       _this.providerid=obj.供应商ID;
+      _this.dialogVisible=!_this.dialogVisible;
+      _this.detailparams.currentPage=1;
       _this.detailMonths=[];
       _this.detailMonths.push(_this.months[0]);
       _this.detailMonths.push(_this.months[1]);
@@ -203,65 +238,91 @@ export default {
     },
     //加载详情列表信息
     loadDetail(params){
-      console.log("这个父组件的方法",params)
       var _this = this;
-      if(params==null){
       _this.detailloading = true;
       _this.detailparams.params.providerid=parseInt(_this.providerid);
       _this.detailparams.params.start=_this.detailMonths[0];
       _this.detailparams.params.end=_this.detailMonths[1];
+      console.log("请求的参数为",_this.detailparams)
+      _this.detaildata=[];
+      _this.detaillableData=[];
       _this.$store.dispatch("bi/getProviderDetailSummary", _this.detailparams).then(res => {
-        _this.dialogVisible=!_this.dialogVisible;
         _this.detailloading = false;
         _this.detaildata = res.header;
         _this.detaillableData = res.tbody;
         _this.detailtotal = res.PageSum;
       }).catch(err => {
+          if(err.hasOwnProperty("msg")){
+            _this.$message({
+            message: err.msg,
+            type: "error"
+          });
+          }
+          else{
+            _this.$message({
+            message: "数据加载失败，请稍后重试",
+            type: "error"
+          });
+          }
+          _this.detailloading = false;
+        });
+      // if(params==null){
+      // _this.detailloading = true;
+      // _this.detailparams.params.providerid=parseInt(_this.providerid);
+      // _this.detailparams.params.start=_this.detailMonths[0];
+      // _this.detailparams.params.end=_this.detailMonths[1];
+      // _this.$store.dispatch("bi/getProviderDetailSummary", _this.detailparams).then(res => {
+      //   _this.dialogVisible=!_this.dialogVisible;
+      //   _this.detailloading = false;
+      //   _this.detaildata = res.header;
+      //   _this.detaillableData = res.tbody;
+      //   _this.detailtotal = res.PageSum;
+      // }).catch(err => {
         
-          if(err.hasOwnProperty("msg")){
-            _this.$message({
-            message: err.msg,
-            type: "error"
-          });
-          }
-          else{
-            _this.$message({
-            message: "数据加载失败，请稍后重试",
-            type: "error"
-          });
-          }
-          _this.dialogVisible=!_this.dialogVisible;
-          _this.detailloading = false;
-        });
-      }
-      else{
-        console.log("此处是父组件的方法判断是否被子组件进行调用了",params)
-        _this.detailloading = true;
-        params.providerid=parseInt(_this.providerid);
-        params.start=_this.detailMonths[0];
-        params.end=_this.detailMonths[1];
-        _this.$store.dispatch("bi/getProviderDetailSummary", params).then(res => {
-        _this.detailloading = false;
-        _this.detaildata = res.header;
-        _this.detaillableData = res.tbody;
-        _this.detailtotal = res.PageSum;
-      }).catch(err => {
-          if(err.hasOwnProperty("msg")){
-            _this.$message({
-            message: err.msg,
-            type: "error"
-          });
-          }
-          else{
-            _this.$message({
-            message: "数据加载失败，请稍后重试",
-            type: "error"
-          });
-          }
+      //     if(err.hasOwnProperty("msg")){
+      //       _this.$message({
+      //       message: err.msg,
+      //       type: "error"
+      //     });
+      //     }
+      //     else{
+      //       _this.$message({
+      //       message: "数据加载失败，请稍后重试",
+      //       type: "error"
+      //     });
+      //     }
+      //     _this.dialogVisible=!_this.dialogVisible;
+      //     _this.detailloading = false;
+      //   });
+      // }
+      // else{
+      //   console.log("此处是父组件的方法判断是否被子组件进行调用了",params)
+      //   _this.detailloading = true;
+      //   params.providerid=parseInt(_this.providerid);
+      //   params.start=_this.detailMonths[0];
+      //   params.end=_this.detailMonths[1];
+      //   _this.$store.dispatch("bi/getProviderDetailSummary", params).then(res => {
+      //   _this.detailloading = false;
+      //   _this.detaildata = res.header;
+      //   _this.detaillableData = res.tbody;
+      //   _this.detailtotal = res.PageSum;
+      // }).catch(err => {
+      //     if(err.hasOwnProperty("msg")){
+      //       _this.$message({
+      //       message: err.msg,
+      //       type: "error"
+      //     });
+      //     }
+      //     else{
+      //       _this.$message({
+      //       message: "数据加载失败，请稍后重试",
+      //       type: "error"
+      //     });
+      //     }
           
-          _this.detailloading = false;
-        });
-      }
+      //     _this.detailloading = false;
+      //   });
+      // }
       
     },
 
@@ -271,6 +332,13 @@ export default {
       _this.params.currentPage = param.page;
       _this.params.pageSize = param.limit;
       _this.loadLater();
+    },
+        //分页点击事件
+    detailpagination(param) {
+      var _this = this;
+      _this.detailparams.currentPage = param.page;
+      _this.detailparams.pageSize = param.limit;
+      _this.loadDetail(null);
     }
   }
 };
