@@ -13,11 +13,13 @@ import {
   getPetFrom,
   getGetCEMs,
   getDoctorTest,
-  getZenLiaoCpayments,
+  getZenLiaoCpayments, 
   GetPmedicinedCpayments,
-  GetPsysListBykey
+  GetPsysListBykey,
+  getProviderSummary,
+  getProviderDetailSummary
 } from '@/api/bi' 
-import {getListData} from '@/utils/index'
+import {getListData} from '@/utils/index' 
 
 const state = {
   logData: [],
@@ -259,7 +261,7 @@ const actions = {
         reject(error)
       })
     })
-  },
+  }, 
   GetPmedicinedCpayments({
     commit
   }, params) {
@@ -273,7 +275,21 @@ const actions = {
         reject(error)
       })
     })
-  },
+  }, 
+  getProviderSummary({
+    commit
+  }, params) {
+    return new Promise((resolve, reject) => {
+      getProviderSummary(params).then(response => { 
+        const {
+          data
+        } = response
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  }, 
   getPsysListBykey({ commit  },params) {
     return new Promise((resolve, reject) => { 
       GetPsysListBykey(params).then(response => {
@@ -283,8 +299,21 @@ const actions = {
       }).catch(error => {
         reject(error)
       })
-    })
-  }
+    })}, 
+  getProviderDetailSummary({
+    commit
+  }, params) {
+    return new Promise((resolve, reject) => {
+      getProviderDetailSummary(params).then(response => {
+        const {
+          data
+        } = response
+        resolve(data) 
+      }).catch(error => {
+        reject(error)
+      })
+    }) 
+  } 
 }
 
 export default {

@@ -194,6 +194,15 @@ export function getZenLiaoCpayments(data) {
 export function GetPmedicinedCpayments(data) {
   return request({
     url: '/BI/GetPmedicinedCpayments',
+  })}
+
+/**
+ * 
+ * @param {获取供应商统计} 
+ */
+export function getProviderSummary(data) {
+  return request({
+    url: '/BI/GetProviderSummary',
     method: 'post',
     data
   })
@@ -202,6 +211,14 @@ export function GetPmedicinedCpayments(data) {
 export function GetPsysListBykey(data){
   return request({
     url: '/PSysList/getPsysListBykey',
+  })}
+/**
+ * 
+ * @param {获取供应商详情统计} 
+ */
+export function getProviderDetailSummary(data) {
+  return request({
+    url: '/BI/GetProviderDetailSummary',
     method: 'post',
     data
   })
