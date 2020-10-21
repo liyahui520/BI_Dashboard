@@ -13,9 +13,11 @@ import {
   getPetFrom,
   getGetCEMs,
   getDoctorTest,
-  getZenLiaoCpayments
-} from '@/api/bi'
-
+  getZenLiaoCpayments,
+  GetPmedicinedCpayments,
+  GetPsysListBykey
+} from '@/api/bi' 
+import {getListData} from '@/utils/index'
 
 const state = {
   logData: [],
@@ -258,6 +260,31 @@ const actions = {
       })
     })
   },
+  GetPmedicinedCpayments({
+    commit
+  }, params) {
+    return new Promise((resolve, reject) => {
+      GetPmedicinedCpayments(params).then(response => {
+        const {
+          data
+        } = response
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getPsysListBykey({ commit  },params) {
+    return new Promise((resolve, reject) => { 
+      GetPsysListBykey(params).then(response => {
+        const { data } = response  
+        var list = getListData(data, { id: 'id', pid: 'parentid', children: 'children', lable: 'name' }) 
+        resolve(list)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  }
 }
 
 export default {

@@ -2,10 +2,13 @@
   <el-card shadow="always">
     <el-tree
       :data="data"
+      ref="tree"
       node-key="id"
       default-expand-all
-      :highlight-current="true"
+      show-checkbox
+      :highlight-current="true" 
       @node-click="handleClick"
+      @check-change="handleCheckChange"
       draggable
     >
     <span class="custom-tree-node" slot-scope="{ node, data }">
@@ -31,6 +34,10 @@ export default {
     treeData: {
       type: Array,
       default: []
+    },
+    newarrNew:{
+      type: Array,
+      default: []
     }
   },
   data() {
@@ -44,6 +51,10 @@ export default {
   methods: {
     handleClick(data,node,relf){
       this.$emit("handleClick",data);
+    },
+    handleCheckChange(){
+      let res = this.$refs.tree.getCheckedNodes(false, false); 
+this.$emit("handleCheckChange",res); 
     },
     handleDragStart(node, ev) {
       console.log("drag start", node);
@@ -79,6 +90,9 @@ export default {
       this.data = oldVal;
       console.log("oldVal");
       console.log(oldVal);
+    },
+    newarrNew(old,val){
+       this.$refs.tree.setCheckedNodes(val);
     }
   }
 };

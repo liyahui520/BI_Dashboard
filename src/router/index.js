@@ -23,6 +23,8 @@ import testechartRoute from './modules/testechart'
 import doctorRouter from './modules/doctor'
 
 import gexingRoute from './modules/gexing'
+
+import pmedicinecpayment from './modules/pmedicinecpayment'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -140,6 +142,7 @@ export const asyncRoutes = [
   doctorRouter,
 
   gexingRoute,
+  pmedicinecpayment,
   // testechartRoute,
   { path: '*', redirect: '/404', hidden: true }
 ]

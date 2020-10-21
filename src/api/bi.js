@@ -186,3 +186,23 @@ export function getZenLiaoCpayments(data) {
     data
   })
 }
+
+/**
+ * 
+ * @param {获取诊疗各项收入统计} data {start,end,drugtype,categoryId}
+ */
+export function GetPmedicinedCpayments(data) {
+  return request({
+    url: '/BI/GetPmedicinedCpayments',
+    method: 'post',
+    data
+  })
+}
+
+export function GetPsysListBykey(data){
+  return request({
+    url: '/PSysList/getPsysListBykey',
+    method: 'post',
+    data
+  })
+}
