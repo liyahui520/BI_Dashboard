@@ -194,6 +194,8 @@ export function getZenLiaoCpayments(data) {
 export function GetPmedicinedCpayments(data) {
   return request({
     url: '/BI/GetPmedicinedCpayments',
+    method: 'post',
+    data
   })}
 
 /**
@@ -211,6 +213,8 @@ export function getProviderSummary(data) {
 export function GetPsysListBykey(data){
   return request({
     url: '/PSysList/getPsysListBykey',
+    method: 'post',
+    data
   })}
 /**
  * 
