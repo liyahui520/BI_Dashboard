@@ -34,7 +34,7 @@
               <el-table-column v-if="item1=='序号'" fixed="left" :prop="item1" sortable :label="item1">
                 <template slot-scope="scope">{{scope.row[item1]}}</template>
               </el-table-column>
-              <el-table-column v-else :prop="item1" sortable :label="item1">
+              <el-table-column v-else-if="item1!='供应商ID'" :prop="item1" sortable :label="item1">
                 <template slot-scope="scope">{{scope.row[item1]}}</template>
               </el-table-column>
             </span>
