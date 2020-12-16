@@ -1,18 +1,19 @@
 #app {
 
   .main-container {
+    width: 100%;
     min-height: 100%;
     transition: margin-left .28s;
-    margin-left: $sideBarWidth;
+    // margin-left: $sideBarWidth;
     position: relative;
   }
 
   .sidebar-container {
     transition: width 0.28s;
-    width: $sideBarWidth !important;
+    // width: $sideBarWidth !important;
     background-color: $menuBg;
-    height: 100%;
-    position: fixed;
+    // height: 100%;
+    // position: fixed;
     font-size: 0px;
     top: 0;
     bottom: 0;
@@ -26,7 +27,7 @@
     }
 
     .scrollbar-wrapper {
-      overflow-x: hidden !important;
+      // overflow-x: hidden !important;
     }
 
     .el-scrollbar__bar.is-vertical {
@@ -49,7 +50,7 @@
 
     a {
       display: inline-block;
-      width: 100%;
+      // width: 100%;
       overflow: hidden;
     }
 
@@ -60,7 +61,9 @@
     .el-menu {
       border: none;
       height: 100%;
-      width: 100% !important;
+      // width: 100% !important;
+      justify-content: flex-start;
+    display: flex;
     }
 
     // menu hover
@@ -70,7 +73,9 @@
         background-color: $menuHover !important;
       }
     }
-
+    .is-active{
+      border-bottom: 2px solid #409eff;
+    }
     .is-active>.el-submenu__title {
       color: $subMenuActiveText !important;
     }

@@ -3,16 +3,16 @@
     <div>
       <h3 class="drawer-title">{{ $t('settings.title') }}</h3>
 
-      <div class="drawer-item">
+      <!-- <div class="drawer-item">
         <span>{{ $t('settings.theme') }}</span>
         <theme-picker style="float: right;height: 26px;margin: -3px 8px 0 0;" @change="themeChange" />
-      </div>
+      </div> -->
 
       <div class="drawer-item">
         <span>{{ $t('settings.tagsView') }}</span>
         <el-switch v-model="tagsView" class="drawer-switch" />
       </div>
-
+<!-- 
       <div class="drawer-item">
         <span>{{ $t('settings.fixedHeader') }}</span>
         <el-switch v-model="fixedHeader" class="drawer-switch" />
@@ -21,7 +21,7 @@
       <div class="drawer-item">
         <span>{{ $t('settings.sidebarLogo') }}</span>
         <el-switch v-model="sidebarLogo" class="drawer-switch" />
-      </div>
+      </div> -->
       <!-- <a v-if="isShowJob" href="https://panjiachen.github.io/vue-element-admin-site/zh/job/" target="_blank" class="job-link">
         <el-alert
           title="部门目前非常缺人！有兴趣的可以点击了解详情。坐标: 字节跳动"
