@@ -147,7 +147,8 @@ export default {
                 color: "#666666"
               }
             },
-            data: _this.agedataList
+            data: _this.agedataList,
+            animationDuration: 3000,
           }
         ]
       });
@@ -195,7 +196,8 @@ export default {
                 shadowOffsetX: 0,
                 shadowColor: "rgba(0, 0, 0, 0.5)"
               }
-            }
+            },
+            animationDuration: 3000,
           }
         ]
       });

@@ -17,7 +17,9 @@ import {
   GetPmedicinedCpayments,
   GetPsysListBykey,
   getProviderSummary,
-  getProviderDetailSummary
+  getProviderDetailSummary,
+  getCustomerType,
+  getPPetsKindOF,
 } from '@/api/bi' 
 import {getListData} from '@/utils/index' 
 
@@ -45,6 +47,36 @@ const mutations = {
 }
 
 const actions = {
+  getPPetsKindOF({
+    commit
+  },params) {
+    return new Promise((resolve, reject) => {
+      getPPetsKindOF(params).then(response => {
+        const {
+          data
+        } = response
+        console.log(data)
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getCustomerType({
+    commit
+  },params) {
+    return new Promise((resolve, reject) => {
+      getCustomerType(params).then(response => {
+        const {
+          data
+        } = response
+        console.log(data)
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
   // get user info
   gettest({
     commit

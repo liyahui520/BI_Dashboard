@@ -1,5 +1,11 @@
 <template>
-  <div id="echartsage" class="chart" style="height:600px;width:800px;margin:auto;"></div>
+<div>
+    <el-main>
+      <div id="echartsage" class="chart" style="height:450px;width:450px;margin:auto;padding:200px auto;"></div>
+    </el-main>
+</div>
+
+  
 </template>
 <script>
 import echarts from "echarts";
@@ -38,21 +44,22 @@ export default {
       var _this = this;
       _this.chart = echarts.init(document.getElementById("echartsage"));
       _this.chart.setOption({
-        color: ["#67E0E3"],
+        color: ["#04b3e8"],
         title: {
           text: "年龄分布",
-          left: "center"
+          left: "left"
         },
         toolbox: {
           show: true,
           feature: {
-            saveAsImage: {
-              show: true,
-              excludeComponents: ["toolbox"],
-              pixelRatio: 2
-            },
-            magicType: { show: true, type: ["line", "bar"] },
-            restore: { show: true }
+            // 控制右侧转换下载等
+            // saveAsImage: {
+            //   show: true,
+            //   excludeComponents: ["toolbox"],
+            //   pixelRatio: 2
+            // },
+            // magicType: { show: true, type: ["line", "bar"] },
+            // restore: { show: true }
           }
         },
         tooltip: {
@@ -101,7 +108,8 @@ export default {
                 color:"#666666"
               }
             },
-            data: _this.dataList
+            data: _this.dataList,
+            animationDuration: 3000,
           }
         ]
       });

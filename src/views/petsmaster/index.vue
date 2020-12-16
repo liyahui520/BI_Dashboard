@@ -6,7 +6,7 @@
           <spread v-if="currentName=='spread'" />
         </el-tab-pane>
         <el-tab-pane label="客户来源" name="source">
-          <sourceCom v-if="currentName=='source'" />
+          <sourceCom :showHead="true" :styleClass="'height:600px;'" v-if="currentName=='source'" />
         </el-tab-pane>
         <el-tab-pane label="活跃客户" name="active">
           <active v-if="currentName=='active'" />
@@ -18,7 +18,10 @@
           <latelyconsume v-if="currentName=='lately'" />
         </el-tab-pane>
         <el-tab-pane label="消费频次" name="number">
-          <consumenumber v-if="currentName=='number'" />
+          <consumenumber :showHead="true" :styleClass="'height:600px;width:1300px;margin:auto;'" v-if="currentName=='number'" />
+        </el-tab-pane>
+        <el-tab-pane label="新老顾客" name="customertype">
+          <customertype :styleClass="'height:600px;width:600px;margin:auto;padding:100px auto;'" :showHead="true" v-if="currentName=='customertype'" />
         </el-tab-pane>
         <!-- <el-tab-pane label="年龄分布" name="age">
           <age v-if="currentName=='age'" />
@@ -41,6 +44,7 @@ import loss from "../component/petsmaster/loss/index";
 // import sex from "../component/petsmaster/sex/index";
 import sourceCom from "../component/petsmaster/source/index";
 import spread from "../component/petsmaster/spread/index";
+import customertype from '../component/petsmaster/customertype/index';
 export default {
   components: {
     active,
@@ -50,7 +54,8 @@ export default {
     loss,
     // sex,
     sourceCom,
-    spread
+    spread,
+    customertype
   },
   data() {
     return {

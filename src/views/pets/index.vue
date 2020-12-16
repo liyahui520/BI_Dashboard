@@ -11,6 +11,9 @@
         <el-tab-pane label="其他" name="other">
           <other v-if="currentName=='other'" />
         </el-tab-pane>
+        <el-tab-pane label="宠物种类" name="pettype">
+          <pettype :styleClass="'height: 600px; width: 800px; margin: auto;'" :showHead="true" v-if="currentName=='pettype'" />
+        </el-tab-pane>
       </el-tabs>
     </el-card>
   </div>
@@ -19,11 +22,13 @@
 import cat from "../component/pets/cat/index";
 import dog from "../component/pets/dog/index";
 import other from "../component/pets/other/index";
+import pettype from '../component/pets/pettype/index';
 export default {
   components: {
     cat,
     dog,
-    other
+    other,
+    pettype
   },
   data() {
     return {

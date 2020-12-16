@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 表单区域 -->
-    <el-header>
+    <el-header v-if="showHead">
       <el-form :inline="true" class="demo-form-inline">
         <el-form-item label="统计周期">
           <el-date-picker
@@ -41,9 +41,9 @@
       </el-form>
     </el-header>
     <el-main>
-      <div id="echartsconsumenumber" class="chart" style="height:600px;width:1300px;margin:auto;"></div>
+      <div id="echartsconsumenumber" class="chart" :style="styleClass"></div>
     </el-main>
-    <div class="remark">
+    <div class="remark" v-if="showHead">
       注：
       <br />1、消费频次：默认显示所有客户的消费频次统计
     </div>
@@ -52,6 +52,16 @@
 <script>
 import echarts from "echarts";
 export default {
+  props:{
+    showHead:{
+      type:Boolean,
+      default:false
+    },
+    styleClass:{
+      type:String,
+      default:'height:600px;width:1300px;margin:auto;'
+    }
+  },
   data() {
     return {
       chart: null,
@@ -67,12 +77,21 @@ export default {
       dataList: [],
       loading: false,
       pcuid: "",
-      options: []
+      options: [],
+      feature:{
+        saveAsImage: {
+              show: true,
+              excludeComponents: ["toolbox"],
+              pixelRatio: 2
+            },
+            magicType: { show: true, type: ["line", "bar"] },
+            restore: { show: true },
+      }
     };
   },
   created() {
     var _this = this;
-    _this.handDefultDate();
+    _this.handleDate();
   },
   methods: {
     //远程方法
@@ -94,39 +113,36 @@ export default {
         this.options = [];
       }
     },
-    handDefultDate() {
-      var _this = this;
-      var currentDate = new Date();
-      var year = currentDate.getFullYear();
-      var month = currentDate.getMonth();
-      var day = currentDate.getDate();
-      var start = `${year}-${
-        month + 1 < 10 ? "0" + (month + 1) : month + 1
-      }-01`;
-      currentDate.setMonth(month + 1);
-      var endMonth = currentDate.getMonth();
-      var end = `${year}-${endMonth < 10 ? "0" + endMonth : endMonth}-01`;
-      var endTwo = `${year}-${
-        endMonth + 1 < 10 ? "0" + (endMonth + 1) : endMonth + 1
-      }-01`;
-      _this.start = start;
-      _this.end = endTwo;
-      _this.months.push(start);
-      _this.months.push(end);
-      _this.searchData();
+    handleDate(){
+      var _this=this;
+      _this.months=[];
+      var now = new Date();
+      var year = now.getFullYear();
+      var month = now.getMonth() + 1;//0-11表示1-12月
+      var day = now.getDate();
+      var dateObj = {};
+      dateObj.end = year + '-' + month + '-' + day; 
+      var nowMonthDay = new Date(year, month, 0).getDate();    //当前月的总天数
+      if(month - 1 <= 0){ //如果是1月，年数往前推一年<br>　　　　 
+          dateObj.start = (year - 1) + '-' + 12 + '-' + day;
+      }else{
+          var lastMonthDay = new Date(year, (parseInt(month) - 1), 0).getDate();  
+          if(lastMonthDay < day){    //1个月前所在月的总天数小于现在的天日期
+              if(day < nowMonthDay){        //当前天日期小于当前月总天数
+                  dateObj.start = year + '-' + (month - 1) + '-' + (lastMonthDay - (nowMonthDay - day));
+              }else{
+                  dateObj.start = year + '-' + (month - 1) + '-' + lastMonthDay;
+              }
+          }else{
+              dateObj.start = year + '-' + (month - 1) + '-' + day;
+          }
+      }
+      _this.months.push(dateObj.start);
+      _this.months.push(dateObj.end);
+      _this.loadNumData();
     },
-    searchData() {
-      var _this = this;
-      var endDate = _this.months[1];
-      var newend = new Date(endDate);
-      newend.setMonth(newend.getMonth() + 1 + 1);
-      var month = newend.getMonth() == 0 ? 12 : newend.getMonth();
-      month = month < 10 ? "0" + month : month;
-      var getDate = newend.getDate();
-      getDate = getDate < 10 ? "0" + getDate : getDate;
-      var endDateTwo = `${newend.getFullYear()}-${month}-${getDate}`;
-      _this.start = _this.months[0];
-      _this.end = endDateTwo;
+    searchData(){
+      var _this=this;
       _this.loadNumData();
     },
     loadNumData() {
@@ -135,8 +151,8 @@ export default {
       _this.dataList = [];
       _this.$store
         .dispatch("bi/getCpaymentNum", {
-          start: _this.start,
-          end: _this.end,
+          start: _this.months[0],
+          end: _this.months[1],
           pcuid: _this.pcuid == "" ? -1 : _this.pcuid
         })
         .then(res => {
@@ -167,22 +183,14 @@ export default {
         document.getElementById("echartsconsumenumber")
       );
       _this.chart.setOption({
-        color: ["#67E0E3"],
+        color: ["#524afd"],
         title: {
           text: "消费频次",
-          left: "center"
+          left:_this.showHead? "center":"left"
         },
         toolbox: {
           show: true,
-          feature: {
-            saveAsImage: {
-              show: true,
-              excludeComponents: ["toolbox"],
-              pixelRatio: 2
-            },
-            magicType: { show: true, type: ["line", "bar"] },
-            restore: { show: true },
-          },
+          feature:(_this.showHead?_this.feature:{}),
         },
         tooltip: {
           trigger: "axis",
@@ -232,7 +240,8 @@ export default {
                 color: "#666666"
               }
             },
-            data: _this.dataList
+            data: _this.dataList,
+            animationDuration: 3000,
           }
         ]
       });

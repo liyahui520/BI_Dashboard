@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 表单区域 -->
-    <el-header>
+    <el-header v-if="showHead">
       <el-form :inline="true" class="demo-form-inline">
         <el-form-item label="统计周期">
           <el-date-picker
@@ -21,13 +21,23 @@
     </el-header>
     <!-- table区域 -->
     <el-main>
-      <div id="echartssource" class="chart" style="height:600px;"></div>
+      <div id="echartssource" class="chart" :style="styleClass"></div>
     </el-main>
   </div>
 </template>
 <script>
 import echarts from "echarts";
 export default {
+  props:{
+    showHead:{
+      type:Boolean,
+      default:false
+    },
+    styleClass:{
+      type:String,
+      default:'height:600px;'
+    }
+  },
   data() {
     return {
       chart: null,
@@ -38,6 +48,15 @@ export default {
         disabledDate(time) {
           return time.getTime() > Date.now();
         }
+      },
+      feature:{
+        saveAsImage: {
+              show: true,
+              excludeComponents: ["toolbox"],
+              pixelRatio: 2
+            },
+            magicType: { show: true, type: ["line", "bar"] },
+            restore: { show: true }
       }
     };
   },
@@ -103,18 +122,14 @@ export default {
       var _this = this;
       _this.chart = echarts.init(document.getElementById("echartssource"));
       _this.chart.setOption({
-        color: ["#67E0E3"],
+        color: ["#f9831b"],
+        title: {
+          text: "客户来源",
+          left: _this.showHead?"center":"left",
+        },
         toolbox: {
           show: true,
-          feature: {
-            saveAsImage: {
-              show: true,
-              excludeComponents: ["toolbox"],
-              pixelRatio: 2
-            },
-            magicType: { show: true, type: ["line", "bar"] },
-            restore: { show: true }
-          }
+          feature: _this.showHead?_this.feature:{},
         },
         tooltip: {
           trigger: "axis",
@@ -171,7 +186,8 @@ export default {
                 }
               }
             },
-            data: _this.dataList
+            data: _this.dataList,
+            animationDuration: 3000,
           }
         ]
       });

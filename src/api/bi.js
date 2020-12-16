@@ -227,3 +227,30 @@ export function getProviderDetailSummary(data) {
     data
   })
 }
+
+
+/**
+ * 
+ * @param {客人类型} 
+ */
+export function getCustomerType(data) {
+  return request({
+    url: '/BI/GetPPetsType',
+    method: 'post',
+    data
+  })
+}
+
+
+
+/**
+ * 
+ * @param {宠物种类占比} 
+ */
+export function getPPetsKindOF(data) {
+  return request({
+    url: '/BI/GetPPetsKindOF',
+    method: 'post',
+    data
+  })
+}

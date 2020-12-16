@@ -1,9 +1,14 @@
 <template>
-  <div
+<div>
+    <el-main>
+        <div
     id="echartsex"
     class="chart"
-    style="height:600px;width:600px;margin:auto;padding:100px auto;"
+    style="height:450px;width:450px;margin:auto;padding:100px auto;"
   ></div>
+    </el-main>
+</div>
+
 </template>
 <script>
 import echarts from "echarts";
@@ -37,18 +42,19 @@ export default {
       var _this = this;
       _this.chart = echarts.init(document.getElementById("echartsex"));
       _this.chart.setOption({
-        color: ["#67E0E3", "#ff9f7f", "#37A2DA"],
+        color: ["#524afd", "#04b3e8", "#fcbd62"],
         title: {
           text: "性别比例",
-          left: "center"
+          left: "left"
         },
         toolbox: {
           show: true,
           feature: {
-            saveAsImage: {
-              excludeComponents: ["toolbox"],
-              pixelRatio: 2
-            }
+            // 控制右侧的下载转换等
+            // saveAsImage: {
+            //   excludeComponents: ["toolbox"],
+            //   pixelRatio: 2
+            // }
           }
         },
         tooltip: {
@@ -57,7 +63,7 @@ export default {
         },
         legend: {
           orient: "vertical",
-          left: "left",
+          left: "right",
           data: _this.headData
         },
         series: [
@@ -73,7 +79,8 @@ export default {
                 shadowOffsetX: 0,
                 shadowColor: "rgba(0, 0, 0, 0.5)"
               }
-            }
+            },
+            animationDuration: 3000,
           }
         ]
       });
