@@ -254,3 +254,26 @@ export function getPPetsKindOF(data) {
     data
   })
 }
+
+
+/**
+ * 
+ * @param {获取新老病例数据} 
+ */
+export function getReportNewAndOld() {
+  return request({
+    url: '/BI/GetReportNewAndOld',
+    method: 'post'
+  })
+}
+
+/**
+ * 
+ * @param {获取首页数据统计} 
+ */
+export function getHomeCount() {
+  return request({
+    url: '/BI/GetHomeCount',
+    method: 'post'
+  })
+}

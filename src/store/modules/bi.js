@@ -20,6 +20,8 @@ import {
   getProviderDetailSummary,
   getCustomerType,
   getPPetsKindOF,
+  getReportNewAndOld,
+  getHomeCount
 } from '@/api/bi' 
 import {getListData} from '@/utils/index' 
 
@@ -47,6 +49,34 @@ const mutations = {
 }
 
 const actions = {
+  getHomeCount({
+    commit
+  }) {
+    return new Promise((resolve, reject) => {
+      getHomeCount().then(response => {
+        const {
+          data
+        } = response
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  getReportNewAndOld({
+    commit
+  }) {
+    return new Promise((resolve, reject) => {
+      getReportNewAndOld().then(response => {
+        const {
+          data
+        } = response
+        resolve(data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
   getPPetsKindOF({
     commit
   },params) {

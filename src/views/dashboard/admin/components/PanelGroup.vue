@@ -1,6 +1,6 @@
 <template>
   <el-row :gutter="40" class="panel-group">
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-people">
           <svg-icon icon-class="peoples" class-name="card-panel-icon" />
@@ -9,11 +9,11 @@
           <div class="card-panel-text">
             新增客户
           </div>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="newCustomer" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <!-- <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-message">
           <svg-icon icon-class="message" class-name="card-panel-icon" />
@@ -25,8 +25,8 @@
           <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num" />
         </div>
       </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    </el-col> -->
+    <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-money">
           <svg-icon icon-class="money" class-name="card-panel-icon" />
@@ -35,11 +35,11 @@
           <div class="card-panel-text">
             实收金额
           </div>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="collectionMoney" :duration="3200" :decimals="2" class="card-panel-num" />
         </div>
       </div>
     </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="12" :sm="12" :lg="8" class="card-panel-col">
       <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-shopping">
           <svg-icon icon-class="shopping" class-name="card-panel-icon" />
@@ -48,7 +48,7 @@
           <div class="card-panel-text">
             待付款金额
           </div>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="willPay" :decimals="2" :duration="3600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -62,8 +62,38 @@ export default {
   components: {
     CountTo
   },
+  data(){
+    return {
+      newCustomer:0,
+      collectionMoney:0.00,
+      willPay:0.00
+      
+    }
+  },
+  created(){
+    var _this=this;
+    _this.loadData();
+  },
   methods: {
-    
+    loadData(){
+      var _this = this;
+      
+      _this.$store.dispatch("bi/getHomeCount").then(res => {
+        _this.loading = false;
+        if(res.length>0){
+          var dataObject=res[0];
+          _this.newCustomer=dataObject.NewCustomer;
+          _this.collectionMoney=dataObject.CollectionMoney;
+          _this.willPay=dataObject.WillPay;
+        }
+      }).catch(err => {
+          _this.$message({
+            message: "数据加载失败，请稍后重试",
+            type: "error"
+          });
+          _this.loading = false;
+        });
+    }
   }
 }
 </script>

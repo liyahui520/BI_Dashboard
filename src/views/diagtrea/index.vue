@@ -1,5 +1,5 @@
 <template>
-  <div class="diagtrea">
+  <div class="app-container">
     <el-card>
       <!-- 表单区域 -->
       <el-header>

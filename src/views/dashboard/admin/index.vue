@@ -3,8 +3,7 @@
     <panel-group />
 
     <el-row style="background: #fff; padding: 16px 16px 0; margin-bottom: 32px">
-      <h1>宠物宠主统计</h1>
-      <line-chart :chart-data="lineChartData" />
+      <line-chart :chartData="chartData" :headData="headData" />
     </el-row>
 
     <el-row :gutter="32">
@@ -61,25 +60,6 @@ import sourceCom from '../../component/petsmaster/source/index';
 import consumenumber from '../../component/petsmaster/consumenumber/index';
 import pettype from '../../component/pets/pettype/index';
 
-const lineChartData = {
-  newVisitis: {
-    expectedData: [100, 120, 161, 134, 105, 160, 165],
-    actualData: [120, 82, 91, 154, 162, 140, 145],
-  },
-  messages: {
-    expectedData: [200, 192, 120, 144, 160, 130, 140],
-    actualData: [180, 160, 151, 106, 145, 150, 130],
-  },
-  purchases: {
-    expectedData: [80, 100, 121, 104, 105, 90, 100],
-    actualData: [120, 90, 100, 138, 142, 130, 130],
-  },
-  shoppings: {
-    expectedData: [130, 140, 141, 142, 145, 150, 160],
-    actualData: [120, 82, 91, 154, 162, 140, 130],
-  },
-};
-
 export default {
   name: "DashboardAdmin",
   components: {
@@ -95,12 +75,17 @@ export default {
   },
   data() {
     return {
-      lineChartData: lineChartData.newVisitis,
+      chartData:{
+        newData:[],
+        oldData:[]
+      },
       params: {},
+      headData:[],
     };
   },
   created(){
     this.handleDate();
+    this.loadLineData();
   },
   methods: {
     handleDate() {
@@ -136,13 +121,37 @@ export default {
       this.params = dateObj;
       
     },
+    loadLineData(){
+      var _this = this;
+      _this.headData = [];
+      _this.chartData={
+        newData:[],
+        oldData:[]
+      };
+      _this.$store.dispatch("bi/getReportNewAndOld").then(res => {
+        _this.loading = false;
+        
+        for (let index = 0; index < res.length; index++) {
+          const element = res[index];
+          _this.headData.push(element.DayTime);
+          _this.chartData.newData.push(element.NewCount)
+          _this.chartData.oldData.push(element.OldCount)
+        }
+      }).catch(err => {
+          _this.$message({
+            message: "数据加载失败，请稍后重试",
+            type: "error"
+          });
+          _this.loading = false;
+        });
+    }
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .dashboard-editor-container {
-  padding: 32px;
+  padding: 10px 30px 0px 30px;
   background-color: rgb(240, 242, 245);
   position: relative;
 
