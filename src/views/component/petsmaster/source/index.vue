@@ -74,7 +74,7 @@ export default {
       var startMonth = currentDate.getMonth() + 1;
       var newStartMonth = startMonth < 10 ? "0" + startMonth : startMonth;
       var newEndMonth = month < 10 ? "0" + month : month;
-      var dateStartFormat = `${year}-${newStartMonth}`;
+      var dateStartFormat = `${(month<3?year-1:year)}-${newStartMonth}`;
       var dateEndFormat = `${year}-${newEndMonth}`;
       _this.months.push(dateStartFormat);
       _this.months.push(dateEndFormat);
@@ -85,6 +85,10 @@ export default {
       var _this = this;
       _this.headData = [];
       _this.dataList = [];
+      console.log("客户来源请求的数据为",{
+          start: _this.months[0] + "-01",
+          end: _this.months[1] + "-31"
+        })
       _this.$store
         .dispatch("bi/getCustomerSource", {
           start: _this.months[0] + "-01",
@@ -100,7 +104,7 @@ export default {
               percentNum: element.PercentNum
             });
           }
-          // console.log("请求客户来源数据结果为", res);
+          console.log("请求客户来源数据结果为", res);
           _this.$nextTick(function() {
             _this.initECharts();
           });

@@ -129,7 +129,7 @@ export default {
       var startMonth = currentDate.getMonth() + 1;
       var newStartMonth = startMonth < 10 ? "0" + startMonth : startMonth;
       var newEndMonth = month < 10 ? "0" + month : month;
-      var dateStartFormat = `${year}-${newStartMonth}`;
+      var dateStartFormat = `${month<3?year-1:year}-${newStartMonth}`;
       var dateEndFormat = `${year}-${newEndMonth}`;
       _this.months.push(dateStartFormat);
       _this.months.push(dateEndFormat);
@@ -140,6 +140,13 @@ export default {
       _this.tbodyData = [];
       _this.headData = [];
       _this.loading = true;
+      console.log("请求的数据为", {
+          end: _this.months[1] + "-31",
+          start: _this.months[0] + "-01",
+          userid: -1,
+          userstatus: _this.enabled ? 0 : 1,
+          roleid: _this.roleid == null ? -1 : _this.roleid
+        })
       _this.$store
         .dispatch("bi/getDoctorTest", {
           end: _this.months[1] + "-31",

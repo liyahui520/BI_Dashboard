@@ -149,6 +149,11 @@ export default {
       var _this = this;
       _this.headData = [];
       _this.dataList = [];
+      console.log("消费频次请求的参数为",{
+          start: _this.months[0],
+          end: _this.months[1],
+          pcuid: _this.pcuid == "" ? -1 : _this.pcuid
+        })
       _this.$store
         .dispatch("bi/getCpaymentNum", {
           start: _this.months[0],
@@ -171,6 +176,7 @@ export default {
           });
         })
         .catch(err => {
+          console.log("请求的错误数据为",err)
           _this.$message({
             message: "消费频次数据加载失败，请稍后重试",
             type: "error"
