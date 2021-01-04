@@ -7,9 +7,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            新增客户
+            新增客户（人）
           </div>
-          <count-to :start-val="0" :end-val="newCustomer" :duration="2600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="newCustomer" :duration="4000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -33,9 +33,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            实收金额
+            实收金额（元）
           </div>
-          <count-to :start-val="0" :end-val="collectionMoney" :duration="3200" :decimals="2" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="collectionMoney" :prefix="'￥'" :duration="4000" :decimals="2" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -46,9 +46,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            待付款金额
+            待付款金额（元）
           </div>
-          <count-to :start-val="0" :end-val="willPay" :decimals="2" :duration="3600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="willPay" :prefix="'￥'" :decimals="2" :duration="4000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
